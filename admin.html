@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Falcon CC — Admin</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f8f8; color: #111; line-height: 1.6; min-height: 100vh; }
+
+    .pin-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
+    .pin-logo { width: 56px; height: 56px; object-fit: contain; margin-bottom: 1.5rem; }
+    .pin-title { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 0.5rem; }
+    .pin-sub { font-size: 13px; color: #888; margin-bottom: 2rem; }
+    .pin-input { font-size: 28px; letter-spacing: 0.5em; text-align: center; width: 160px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-family: monospace; }
+    .pin-input:focus { border-color: #1565C0; }
+    .btn-enter { margin-top: 1rem; background: #1565C0; color: #fff; font-size: 14px; padding: 10px 28px; border-radius: 5px; border: none; cursor: pointer; font-family: inherit; width: 160px; }
+    .btn-enter:hover { background: #1976D2; }
+    .pin-error { color: #dc2626; font-size: 13px; margin-top: 0.75rem; display: none; }
+
+    .admin-panel { display: none; }
+    .admin-nav { background: #fff; border-bottom: 1px solid #e8e8e8; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 60px; }
+    .admin-nav-left { display: flex; align-items: center; gap: 10px; }
+    .admin-nav-left img { height: 36px; width: 36px; object-fit: contain; }
+    .admin-nav-title { font-size: 14px; font-weight: 600; color: #111; }
+    .admin-nav-badge { font-size: 11px; background: #eff6ff; color: #1565C0; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
+    .btn-logout { font-size: 12px; color: #888; background: none; border: none; cursor: pointer; font-family: inherit; }
+    .btn-logout:hover { color: #111; }
+
+    .admin-body { max-width: 760px; margin: 0 auto; padding: 3rem 2.5rem; }
+    .admin-header { margin-bottom: 2rem; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .admin-header h1 { font-size: 28px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; }
+    .admin-header p { font-size: 13px; color: #888; margin-top: 4px; }
+    .btn-refresh { background: #f5f5f5; color: #555; font-size: 12px; padding: 6px 14px; border-radius: 4px; border: 1px solid #e0e0e0; cursor: pointer; font-family: inherit; }
+    .btn-refresh:hover { background: #eee; }
+
+    .fixture-admin-card { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+    .fac-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .fac-title { font-size: 15px; font-weight: 600; color: #111; }
+    .fac-meta { font-size: 12px; color: #aaa; margin-top: 2px; }
+    .fac-count { font-size: 13px; font-weight: 600; color: #1565C0; white-space: nowrap; }
+    .fac-count.full { color: #16a34a; }
+    .fac-players { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 6px; }
+    .fac-chip { background: #f0f4ff; border: 1px solid #dde3f0; border-radius: 20px; font-size: 12px; padding: 3px 12px; color: #1565C0; }
+    .fac-empty { font-size: 12px; color: #ccc; margin-top: 0.5rem; font-style: italic; }
+    .loading { font-size: 14px; color: #aaa; padding: 2rem 0; }
+
+    @media (max-width: 600px) {
+      .admin-body { padding: 2rem 1.25rem; }
+      .admin-nav { padding: 0 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="pin-screen" id="pin-screen">
+  <img class="pin-logo" src="logo.png" alt="Falcon CC">
+  <div class="pin-title">Admin Access</div>
+  <div class="pin-sub">Enter your PIN to continue</div>
+  <input class="pin-input" type="password" id="pin-input" maxlength="4" placeholder="····" onkeydown="if(event.key==='Enter')checkPin()">
+  <button class="btn-enter" onclick="checkPin()">Enter</button>
+  <div class="pin-error" id="pin-error">Incorrect PIN. Try again.</div>
+</div>
+
+<div class="admin-panel" id="admin-panel">
+  <div class="admin-nav">
+    <div class="admin-nav-left">
+      <img src="logo.png" alt="Falcon CC">
+      <span class="admin-nav-title">Falcon CC</span>
+      <span class="admin-nav-badge">Admin</span>
+    </div>
+    <button class="btn-logout" onclick="logout()">Log out</button>
+  </div>
+  <div class="admin-body">
+    <div class="admin-header">
+      <div>
+        <h1>Game Signups</h1>
+        <p>Live availability across all 2026 fixtures.</p>
+      </div>
+      <button class="btn-refresh" onclick="loadAndRender()">Refresh</button>
+    </div>
+    <div id="admin-fixtures"><div class="loading">Loading…</div></div>
+  </div>
+</div>
+
+<script>
+var PIN = '1147';
+var SUPABASE_URL = 'https://ufffpsntjptbhgjgvfjg.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_QqgFsWUrAuLvTG5HTucUJw_1pkLpGB4';
+
+var FIXTURES = [
+  { id:'apr25', day:25, month:'Apr', weekday:'Sat', opponent:'Danbury', time:'9:50 AM', venue:'Danbury' },
+  { id:'apr26', day:26, month:'Apr', weekday:'Sun', opponent:'Danbury', time:'2:00 PM', venue:'Danbury' },
+  { id:'may02', day:2,  month:'May', weekday:'Sat', opponent:'CCA CC', time:'2:00 PM', venue:'West Haven' },
+  { id:'may03', day:3,  month:'May', weekday:'Sun', opponent:'Danbury 2', time:'2:00 PM', venue:'Danbury' },
+  { id:'may09', day:9,  month:'May', weekday:'Sat', opponent:'New Haven CC', time:'9:50 AM', venue:'New Milford' },
+  { id:'may16', day:16, month:'May', weekday:'Sat', opponent:'Bridgeport', time:'2:00 PM', venue:'Norwalk' },
+  { id:'may17', day:17, month:'May', weekday:'Sun', opponent:'Dogs', time:'9:50 AM', venue:'New Milford' },
+  { id:'may30', day:30, month:'May', weekday:'Sat', opponent:'West Haven', time:'2:00 PM', venue:'Danbury' },
+  { id:'may31', day:31, month:'May', weekday:'Sun', opponent:'GreenWave', time:'9:50 AM', venue:'Clinton, NH' },
+  { id:'jun06', day:6,  month:'Jun', weekday:'Sat', opponent:'Eagles', time:'2:00 PM', venue:'Kimberly, NH' },
+  { id:'jun13', day:13, month:'Jun', weekday:'Sat', opponent:'Quarter Final', time:'TBD', venue:'TBD' },
+  { id:'jun14', day:14, month:'Jun', weekday:'Sun', opponent:'SF & Final', time:'TBD', venue:'TBD' }
+];
+
+function checkPin() {
+  if (document.getElementById('pin-input').value === PIN) {
+    document.getElementById('pin-screen').style.display = 'none';
+    document.getElementById('admin-panel').style.display = 'block';
+    loadAndRender();
+  } else {
+    var err = document.getElementById('pin-error');
+    err.style.display = 'block';
+    document.getElementById('pin-input').value = '';
+    setTimeout(function(){ err.style.display = 'none'; }, 3000);
+  }
+}
+
+function logout() {
+  document.getElementById('admin-panel').style.display = 'none';
+  document.getElementById('pin-screen').style.display = 'flex';
+  document.getElementById('pin-input').value = '';
+}
+
+function loadAndRender() {
+  document.getElementById('admin-fixtures').innerHTML = '<div class="loading">Loading…</div>';
+  fetch(SUPABASE_URL + '/rest/v1/signups?select=id,name,created_at&order=created_at.asc', {
+    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+  }).then(function(r){ return r.json(); }).then(function(rows) {
+    var signups = {};
+    (rows || []).forEach(function(r) {
+      if (!signups[r.id]) signups[r.id] = [];
+      signups[r.id].push(r.name);
+    });
+    var html = '';
+    FIXTURES.forEach(function(f) {
+      var players = signups[f.id] || [];
+      var isFull = players.length >= 11;
+      var chips = players.length
+        ? players.map(function(p){ return '<span class="fac-chip">' + esc(p) + '</span>'; }).join('')
+        : '<div class="fac-empty">No signups yet</div>';
+      html += '<div class="fixture-admin-card">' +
+        '<div class="fac-header">' +
+          '<div><div class="fac-title">' + f.day + ' ' + f.month + ' — vs ' + esc(f.opponent) + '</div>' +
+          '<div class="fac-meta">' + f.weekday + ' · ' + f.time + ' · ' + esc(f.venue) + '</div></div>' +
+          '<div class="fac-count' + (isFull ? ' full' : '') + '">' + players.length + ' / 11' + (isFull ? ' ✓' : '') + '</div>' +
+        '</div>' +
+        '<div class="fac-players">' + chips + '</div>' +
+      '</div>';
+    });
+    document.getElementById('admin-fixtures').innerHTML = html;
+  }).catch(function() {
+    document.getElementById('admin-fixtures').innerHTML = '<div class="loading">Error loading data. Check your connection.</div>';
+  });
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+</script>
+</body>
+</html>
