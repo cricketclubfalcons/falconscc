@@ -4,128 +4,62 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Falcon CC — Team & Schedule</title>
-  <meta name="description" content="Falcon CC squad and 2026 season schedule.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #080808; color: #e5e5e5; line-height: 1.6; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #111; line-height: 1.6; }
 
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: #0a0a0aee; backdrop-filter: blur(12px);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; height: 64px;
-      border-bottom: 1px solid #1565C0;
-    }
+    nav { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #e8e8e8; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 60px; }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo img { height: 44px; width: 44px; object-fit: contain; }
-    .nav-logo-text { color: #fff; font-size: 15px; font-weight: 500; letter-spacing: 0.03em; }
+    .nav-logo img { height: 38px; width: 38px; object-fit: contain; }
+    .nav-logo-text { color: #111; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
     .nav-links { display: flex; gap: 2rem; }
-    .nav-links a { color: #888; font-size: 13px; text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover, .nav-links a.active { color: #fff; }
-    .nav-cta {
-      background: #1565C0; color: #fff; font-size: 13px;
-      padding: 7px 18px; border-radius: 4px; cursor: pointer;
-      border: none; font-family: inherit; text-decoration: none;
-    }
+    .nav-links a { color: #666; font-size: 13px; text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: #111; }
+    .nav-cta { background: #1565C0; color: #fff; font-size: 13px; padding: 7px 16px; border-radius: 5px; text-decoration: none; }
     .nav-cta:hover { background: #1976D2; }
 
-    .page-header {
-      padding: 5rem 2rem 3rem;
-      text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .page-header::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 80%, #1565C015 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .page-header-inner { position: relative; z-index: 1; }
-    .section-label { color: #1E88E5; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; font-weight: 500; }
-    .page-header h1 { color: #fff; font-size: 40px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-    .page-header p { color: #555; font-size: 15px; }
+    .page-header { padding: 4rem 2.5rem 2rem; max-width: 900px; margin: 0 auto; }
+    .page-header-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .page-header h1 { font-size: 36px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; }
+    .page-header p { font-size: 14px; color: #888; margin-top: 0.5rem; }
 
-    /* SQUAD */
-    .squad-section { padding: 4rem 2rem; max-width: 960px; margin: 0 auto; }
-    .section-title { font-size: 22px; font-weight: 600; color: #fff; margin-bottom: 2rem; }
-    .squad-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 1rem;
-    }
-    .player-card {
-      background: #111;
-      border: 0.5px solid #1e1e1e;
-      border-radius: 10px;
-      padding: 1.25rem 1rem;
-      text-align: center;
-      transition: border-color 0.2s;
-    }
-    .player-card:hover { border-color: #1565C050; }
-    .player-avatar {
-      width: 52px; height: 52px; border-radius: 50%;
-      background: #1565C020; border: 1px solid #1565C040;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 0.75rem;
-      font-size: 18px; font-weight: 600; color: #1E88E5;
-    }
-    .player-name { font-size: 14px; font-weight: 500; color: #e0e0e0; }
-    .player-num { font-size: 11px; color: #444; margin-top: 2px; }
+    .squad-section { padding: 2rem 2.5rem 4rem; max-width: 900px; margin: 0 auto; }
+    .section-title { font-size: 13px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem; }
 
-    hr { border: none; border-top: 0.5px solid #181818; margin: 0 2rem; }
+    .squad-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 1rem; }
+    .player-card { background: #f8f8f8; border: 1px solid #f0f0f0; border-radius: 10px; padding: 1.25rem 1rem; text-align: center; transition: border-color 0.2s; }
+    .player-card:hover { border-color: #1565C040; background: #f0f4ff; }
+    .player-avatar { width: 48px; height: 48px; border-radius: 50%; background: #e8eeff; border: 1px solid #c7d4f8; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; font-size: 17px; font-weight: 600; color: #1565C0; }
+    .player-name { font-size: 14px; font-weight: 500; color: #111; }
 
-    /* SCHEDULE */
-    .schedule-section { padding: 4rem 2rem; max-width: 960px; margin: 0 auto; }
-    .schedule-table-wrap { overflow-x: auto; border-radius: 10px; border: 0.5px solid #1e1e1e; }
+    hr { border: none; border-top: 1px solid #f0f0f0; margin: 0 2.5rem; }
+
+    .schedule-section { padding: 3rem 2.5rem 5rem; max-width: 900px; margin: 0 auto; }
+    .schedule-wrap { overflow-x: auto; border-radius: 10px; border: 1px solid #f0f0f0; margin-top: 1.5rem; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    thead tr { background: #111; border-bottom: 1px solid #1e1e1e; }
-    thead th {
-      padding: 12px 16px; text-align: left;
-      color: #555; font-weight: 500; font-size: 11px;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      white-space: nowrap;
-    }
-    tbody tr { border-bottom: 0.5px solid #141414; transition: background 0.15s; }
+    thead tr { background: #f8f8f8; border-bottom: 1px solid #f0f0f0; }
+    thead th { padding: 12px 16px; text-align: left; color: #999; font-weight: 500; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+    tbody tr { border-bottom: 1px solid #f5f5f5; transition: background 0.15s; }
     tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: #111; }
-    tbody td { padding: 13px 16px; color: #aaa; white-space: nowrap; }
-    tbody td.date { color: #fff; font-weight: 500; }
-    tbody td.opponent { color: #e0e0e0; }
-    tbody td.venue { color: #666; font-size: 12px; }
-    .tbd { color: #333 !important; font-style: italic; }
-    .badge-home {
-      display: inline-block; font-size: 10px; padding: 2px 8px;
-      border-radius: 10px; background: #1565C015; color: #60a5fa;
-      border: 1px solid #1565C030; margin-left: 6px; vertical-align: middle;
-    }
-    .badge-away {
-      display: inline-block; font-size: 10px; padding: 2px 8px;
-      border-radius: 10px; background: #ffffff08; color: #555;
-      border: 1px solid #2a2a2a; margin-left: 6px; vertical-align: middle;
-    }
-    .badge-final {
-      display: inline-block; font-size: 10px; padding: 2px 8px;
-      border-radius: 10px; background: #1565C030; color: #90caf9;
-      border: 1px solid #1565C060; margin-left: 6px; vertical-align: middle;
-    }
+    tbody tr:hover { background: #fafafa; }
+    tbody td { padding: 13px 16px; color: #666; white-space: nowrap; }
+    td.date { color: #111; font-weight: 600; }
+    td.opponent { color: #333; font-weight: 500; }
+    td.venue { color: #aaa; font-size: 12px; }
+    .tbd { color: #ccc !important; font-style: italic; }
+    .badge-playoff { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; margin-left: 6px; }
 
-    footer {
-      background: #050505; padding: 2rem;
-      border-top: 0.5px solid #111;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
-      margin-top: 4rem;
-    }
-    .footer-left { color: #2a2a2a; font-size: 12px; }
-    .footer-left span { color: #3a3a3a; }
+    footer { border-top: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-left { font-size: 12px; color: #bbb; }
     .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a { color: #2a2a2a; font-size: 12px; text-decoration: none; }
-    .footer-links a:hover { color: #555; }
+    .footer-links a { font-size: 12px; color: #bbb; text-decoration: none; }
+    .footer-links a:hover { color: #666; }
 
     @media (max-width: 640px) {
-      .page-header h1 { font-size: 28px; }
       .nav-links { display: none; }
-      .squad-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
+      .squad-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+      .page-header h1 { font-size: 28px; }
     }
   </style>
 </head>
@@ -133,24 +67,24 @@
 
 <nav>
   <a class="nav-logo" href="index.html">
-    <img src="logo.png" alt="Falcon CC logo">
+    <img src="logo.png" alt="Falcon CC">
     <span class="nav-logo-text">Falcon CC</span>
   </a>
   <div class="nav-links">
     <a href="index.html">Home</a>
     <a href="index.html#about">About</a>
     <a href="team.html" class="active">Team</a>
+    <a href="fixtures.html">Fixtures</a>
+    <a href="results.html">Results</a>
     <a href="index.html#join">Join</a>
   </div>
-  <a class="nav-cta" href="index.html#join">Join the club</a>
+  <a class="nav-cta" href="index.html#join">Join us</a>
 </nav>
 
 <div class="page-header">
-  <div class="page-header-inner">
-    <div class="section-label">2026 Season</div>
-    <h1>The Squad</h1>
-    <p>Falcon CC · SCL League · Southern Connecticut</p>
-  </div>
+  <div class="page-header-label">2026 Season</div>
+  <h1>The Squad</h1>
+  <p>Falcon CC · SCL League · Southern Connecticut</p>
 </div>
 
 <section class="squad-section">
@@ -182,7 +116,7 @@
 
 <section class="schedule-section" id="schedule">
   <div class="section-title">2026 Schedule</div>
-  <div class="schedule-table-wrap">
+  <div class="schedule-wrap">
     <table>
       <thead>
         <tr>
@@ -194,107 +128,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="date">Apr 25</td>
-          <td>Saturday</td>
-          <td>9:50 AM</td>
-          <td class="opponent">Danbury</td>
-          <td class="venue">Danbury</td>
-        </tr>
-        <tr>
-          <td class="date">Apr 26</td>
-          <td>Sunday</td>
-          <td>2:00 PM</td>
-          <td class="opponent">Danbury</td>
-          <td class="venue">Danbury</td>
-        </tr>
-        <tr>
-          <td class="date">May 2</td>
-          <td>Saturday</td>
-          <td>2:00 PM</td>
-          <td class="opponent">CCA CC</td>
-          <td class="venue">West Haven</td>
-        </tr>
-        <tr>
-          <td class="date">May 3</td>
-          <td>Sunday</td>
-          <td>2:00 PM</td>
-          <td class="opponent">Danbury 2</td>
-          <td class="venue">Danbury</td>
-        </tr>
-        <tr>
-          <td class="date">May 9</td>
-          <td>Saturday</td>
-          <td>9:50 AM</td>
-          <td class="opponent">New Haven CC</td>
-          <td class="venue">New Milford</td>
-        </tr>
-        <tr>
-          <td class="date">May 16</td>
-          <td>Saturday</td>
-          <td>2:00 PM</td>
-          <td class="opponent">Bridgeport</td>
-          <td class="venue">Norwalk</td>
-        </tr>
-        <tr>
-          <td class="date">May 17</td>
-          <td>Sunday</td>
-          <td>9:50 AM</td>
-          <td class="opponent">Dogs</td>
-          <td class="venue">New Milford</td>
-        </tr>
-        <tr>
-          <td class="date">May 30</td>
-          <td>Saturday</td>
-          <td>2:00 PM</td>
-          <td class="opponent">West Haven</td>
-          <td class="venue">Danbury</td>
-        </tr>
-        <tr>
-          <td class="date">May 31</td>
-          <td>Sunday</td>
-          <td>9:50 AM</td>
-          <td class="opponent">GreenWave</td>
-          <td class="venue">Clinton, NH</td>
-        </tr>
-        <tr>
-          <td class="date">Jun 6</td>
-          <td>Saturday</td>
-          <td>2:00 PM</td>
-          <td class="opponent">Eagles</td>
-          <td class="venue">Kimberly, NH</td>
-        </tr>
-        <tr>
-          <td class="date">Jun 7</td>
-          <td>Sunday</td>
-          <td class="tbd">TBD</td>
-          <td class="opponent tbd">TBD</td>
-          <td class="venue tbd">TBD</td>
-        </tr>
-        <tr>
-          <td class="date">Jun 13</td>
-          <td>Saturday</td>
-          <td class="tbd">TBD</td>
-          <td class="opponent">QF <span class="badge-final">Playoff</span></td>
-          <td class="venue tbd">TBD</td>
-        </tr>
-        <tr>
-          <td class="date">Jun 14</td>
-          <td>Sunday</td>
-          <td class="tbd">TBD</td>
-          <td class="opponent">SF → Final <span class="badge-final">Playoff</span></td>
-          <td class="venue tbd">TBD</td>
-        </tr>
+        <tr><td class="date">Apr 25</td><td>Saturday</td><td>9:50 AM</td><td class="opponent">Danbury</td><td class="venue">Danbury</td></tr>
+        <tr><td class="date">Apr 26</td><td>Sunday</td><td>2:00 PM</td><td class="opponent">Danbury</td><td class="venue">Danbury</td></tr>
+        <tr><td class="date">May 2</td><td>Saturday</td><td>2:00 PM</td><td class="opponent">CCA CC</td><td class="venue">West Haven</td></tr>
+        <tr><td class="date">May 3</td><td>Sunday</td><td>2:00 PM</td><td class="opponent">Danbury 2</td><td class="venue">Danbury</td></tr>
+        <tr><td class="date">May 9</td><td>Saturday</td><td>9:50 AM</td><td class="opponent">New Haven CC</td><td class="venue">New Milford</td></tr>
+        <tr><td class="date">May 16</td><td>Saturday</td><td>2:00 PM</td><td class="opponent">Bridgeport</td><td class="venue">Norwalk</td></tr>
+        <tr><td class="date">May 17</td><td>Sunday</td><td>9:50 AM</td><td class="opponent">Dogs</td><td class="venue">New Milford</td></tr>
+        <tr><td class="date">May 30</td><td>Saturday</td><td>2:00 PM</td><td class="opponent">West Haven</td><td class="venue">Danbury</td></tr>
+        <tr><td class="date">May 31</td><td>Sunday</td><td>9:50 AM</td><td class="opponent">GreenWave</td><td class="venue">Clinton, NH</td></tr>
+        <tr><td class="date">Jun 6</td><td>Saturday</td><td>2:00 PM</td><td class="opponent">Eagles</td><td class="venue">Kimberly, NH</td></tr>
+        <tr><td class="date">Jun 13</td><td>Saturday</td><td class="tbd">TBD</td><td class="opponent">QF <span class="badge-playoff">Playoff</span></td><td class="tbd">TBD</td></tr>
+        <tr><td class="date">Jun 14</td><td>Sunday</td><td class="tbd">TBD</td><td class="opponent">SF → Final <span class="badge-playoff">Playoff</span></td><td class="tbd">TBD</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
 <footer>
-  <div class="footer-left">&copy; 2025 <span>Falcon CC</span> &nbsp;·&nbsp; SCL League &nbsp;·&nbsp; Southern Connecticut</div>
+  <div class="footer-left">&copy; 2025 Falcon CC &nbsp;·&nbsp; SCL League &nbsp;·&nbsp; Southern Connecticut</div>
   <div class="footer-links">
     <a href="index.html">Home</a>
     <a href="team.html">Team</a>
+    <a href="fixtures.html">Fixtures</a>
+    <a href="results.html">Results</a>
     <a href="index.html#join">Join</a>
   </div>
 </footer>
