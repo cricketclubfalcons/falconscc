@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Falcon CC — Fixtures</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #111; line-height: 1.6; }
+    nav { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #e8e8e8; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 60px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { height: 38px; width: 38px; object-fit: contain; }
+    .nav-logo-text { color: #111; font-size: 15px; font-weight: 600; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { color: #666; font-size: 13px; text-decoration: none; }
+    .nav-links a:hover, .nav-links a.active { color: #111; }
+    .nav-cta { background: #1565C0; color: #fff; font-size: 13px; padding: 7px 16px; border-radius: 5px; text-decoration: none; }
+
+    .page-header { padding: 4rem 2.5rem 2rem; max-width: 800px; margin: 0 auto; }
+    .page-header-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .page-header h1 { font-size: 36px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; }
+    .page-header p { font-size: 14px; color: #888; margin-top: 0.5rem; }
+
+    .fixtures-wrap { max-width: 800px; margin: 0 auto; padding: 0 2.5rem 5rem; }
+    .fixture-group-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; padding: 1.5rem 0 0.75rem; border-top: 1px solid #f0f0f0; margin-top: 1rem; }
+    .fixture-group-label:first-child { border-top: none; margin-top: 0; }
+
+    .fixture-card { padding: 1.25rem 0; border-bottom: 1px solid #f5f5f5; }
+    .fixture-main { display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 1.5rem; }
+    .fixture-date-block { text-align: center; }
+    .fixture-day { font-size: 24px; font-weight: 700; color: #0a0a0a; line-height: 1; }
+    .fixture-month { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+    .fixture-weekday { font-size: 11px; color: #ccc; margin-top: 1px; }
+    .fixture-opponent { font-size: 15px; font-weight: 600; color: #111; }
+    .fixture-meta { font-size: 12px; color: #aaa; margin-top: 3px; display: flex; gap: 8px; align-items: center; }
+    .fixture-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: #ddd; }
+    .fixture-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 500; }
+    .badge-upcoming { background: #eff6ff; color: #1565C0; }
+    .badge-playoff { background: #fef3c7; color: #92400e; }
+    .btn-signup { background: #1565C0; color: #fff; font-size: 12px; padding: 6px 14px; border-radius: 4px; border: none; cursor: pointer; font-family: inherit; white-space: nowrap; }
+    .btn-signup:hover { background: #1976D2; }
+    .btn-unsign { background: #fff; color: #dc2626; font-size: 12px; padding: 6px 14px; border-radius: 4px; border: 1px solid #fca5a5; cursor: pointer; font-family: inherit; white-space: nowrap; }
+    .btn-unsign:hover { background: #fef2f2; }
+    .signup-count { font-size: 11px; color: #aaa; text-align: right; }
+
+    /* Signup panel */
+    .signup-panel { display: none; margin-top: 1rem; padding: 1rem 1.25rem; background: #f8f9ff; border-radius: 8px; border: 1px solid #e0e8ff; }
+    .signup-panel.open { display: block; }
+    .signup-panel-title { font-size: 13px; font-weight: 600; color: #1565C0; margin-bottom: 0.75rem; }
+    .signup-input-row { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+    .signup-input { padding: 8px 12px; border: 1px solid #dde3f0; border-radius: 4px; font-size: 13px; font-family: inherit; outline: none; width: 200px; }
+    .signup-input:focus { border-color: #1565C0; }
+    .btn-confirm { background: #1565C0; color: #fff; font-size: 13px; padding: 8px 16px; border-radius: 4px; border: none; cursor: pointer; font-family: inherit; }
+    .btn-confirm:hover { background: #1976D2; }
+    .signup-msg { font-size: 12px; color: #16a34a; margin-top: 0.5rem; display: none; }
+    .signup-error { font-size: 12px; color: #dc2626; margin-top: 0.5rem; display: none; }
+    .signed-up-list { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 6px; }
+    .signed-up-chip { background: #fff; border: 1px solid #dde3f0; border-radius: 20px; font-size: 12px; padding: 3px 10px; color: #555; }
+
+    footer { border-top: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-left { font-size: 12px; color: #bbb; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 12px; color: #bbb; text-decoration: none; }
+    .footer-links a:hover { color: #666; }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .fixture-main { grid-template-columns: 60px 1fr; }
+      .fixture-actions { display: none; }
+      .page-header h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="logo.png" alt="Falcon CC">
+    <span class="nav-logo-text">Falcon CC</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="index.html#about">About</a>
+    <a href="team.html">Team</a>
+    <a href="fixtures.html" class="active">Fixtures</a>
+    <a href="index.html#join">Join</a>
+  </div>
+  <a class="nav-cta" href="index.html#join">Join us</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-label">SCL League · 2026 Season</div>
+  <h1>Fixtures</h1>
+  <p>Click "Sign up" on any match to confirm your availability.</p>
+</div>
+
+<div class="fixtures-wrap" id="fixtures-wrap">
+  <!-- Rendered by JS -->
+</div>
+
+<footer>
+  <div class="footer-left">&copy; 2025 Falcon CC &nbsp;·&nbsp; SCL League &nbsp;·&nbsp; Southern Connecticut</div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="team.html">Team</a>
+    <a href="fixtures.html">Fixtures</a>
+    <a href="index.html#join">Join</a>
+  </div>
+</footer>
+
+<script>
+var FIXTURES = [
+  { id:'apr25', day:25, month:'Apr', weekday:'Sat', opponent:'Danbury', time:'9:50 AM', venue:'Danbury', type:'upcoming' },
+  { id:'apr26', day:26, month:'Apr', weekday:'Sun', opponent:'Danbury', time:'2:00 PM', venue:'Danbury', type:'upcoming' },
+  { id:'may02', day:2,  month:'May', weekday:'Sat', opponent:'CCA CC', time:'2:00 PM', venue:'West Haven', type:'upcoming' },
+  { id:'may03', day:3,  month:'May', weekday:'Sun', opponent:'Danbury 2', time:'2:00 PM', venue:'Danbury', type:'upcoming' },
+  { id:'may09', day:9,  month:'May', weekday:'Sat', opponent:'New Haven CC', time:'9:50 AM', venue:'New Milford', type:'upcoming' },
+  { id:'may16', day:16, month:'May', weekday:'Sat', opponent:'Bridgeport', time:'2:00 PM', venue:'Norwalk', type:'upcoming' },
+  { id:'may17', day:17, month:'May', weekday:'Sun', opponent:'Dogs', time:'9:50 AM', venue:'New Milford', type:'upcoming' },
+  { id:'may30', day:30, month:'May', weekday:'Sat', opponent:'West Haven', time:'2:00 PM', venue:'Danbury', type:'upcoming' },
+  { id:'may31', day:31, month:'May', weekday:'Sun', opponent:'GreenWave', time:'9:50 AM', venue:'Clinton, NH', type:'upcoming' },
+  { id:'jun06', day:6,  month:'Jun', weekday:'Sat', opponent:'Eagles', time:'2:00 PM', venue:'Kimberly, NH', type:'upcoming' },
+  { id:'jun13', day:13, month:'Jun', weekday:'Sat', opponent:'Quarter Final', time:'TBD', venue:'TBD', type:'playoff' },
+  { id:'jun14', day:14, month:'Jun', weekday:'Sun', opponent:'Semi Final & Final', time:'TBD', venue:'TBD', type:'playoff' }
+];
+
+var STORAGE_KEY = 'falconcc_signups';
+
+function loadSignups() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveSignups(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+function render() {
+  var signups = loadSignups();
+  var wrap = document.getElementById('fixtures-wrap');
+  var months = {};
+  FIXTURES.forEach(function(f) { if (!months[f.month]) months[f.month] = []; months[f.month].push(f); });
+  var html = '';
+  var first = true;
+  Object.keys(months).forEach(function(m) {
+    html += '<div class="fixture-group-label' + (first ? ' style="border-top:none;margin-top:0"' : '') + '">' + m + '</div>';
+    first = false;
+    months[m].forEach(function(f) {
+      var players = signups[f.id] || [];
+      var badge = f.type === 'playoff' ? 'badge-playoff">Playoff' : 'badge-upcoming">Upcoming';
+      var chips = players.map(function(p) { return '<span class="signed-up-chip">' + esc(p) + '</span>'; }).join('');
+      html += '<div class="fixture-card" id="card-' + f.id + '">' +
+        '<div class="fixture-main">' +
+          '<div class="fixture-date-block"><div class="fixture-day">' + f.day + '</div><div class="fixture-month">' + f.month + '</div><div class="fixture-weekday">' + f.weekday + '</div></div>' +
+          '<div><div class="fixture-opponent">Falcon CC vs ' + esc(f.opponent) + '</div><div class="fixture-meta">' + f.time + '<div class="fixture-meta-dot"></div>' + esc(f.venue) + '</div></div>' +
+          '<div class="fixture-actions">' +
+            '<span class="badge ' + badge + '</span>' +
+            '<button class="btn-signup" onclick="togglePanel(\'' + f.id + '\')">Sign up</button>' +
+            '<div class="signup-count" id="count-' + f.id + '">' + players.length + ' confirmed</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="signup-panel" id="panel-' + f.id + '">' +
+          '<div class="signup-panel-title">Confirm availability for ' + f.day + ' ' + f.month + ' vs ' + esc(f.opponent) + '</div>' +
+          '<div class="signup-input-row">' +
+            '<input class="signup-input" id="input-' + f.id + '" placeholder="Your name" onkeydown="if(event.key===\'Enter\')confirmSignup(\'' + f.id + '\')">' +
+            '<button class="btn-confirm" onclick="confirmSignup(\'' + f.id + '\')">I\'m in</button>' +
+            '<button class="btn-unsign" onclick="removeSignup(\'' + f.id + '\')">Remove me</button>' +
+          '</div>' +
+          '<div class="signup-msg" id="msg-' + f.id + '"></div>' +
+          '<div class="signup-error" id="err-' + f.id + '"></div>' +
+          (players.length ? '<div class="signed-up-list" id="list-' + f.id + '">' + chips + '</div>' : '<div class="signed-up-list" id="list-' + f.id + '"></div>') +
+        '</div>' +
+      '</div>';
+    });
+  });
+  wrap.innerHTML = html;
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function togglePanel(id) {
+  var panel = document.getElementById('panel-' + id);
+  panel.classList.toggle('open');
+  if (panel.classList.contains('open')) document.getElementById('input-' + id).focus();
+}
+
+function confirmSignup(id) {
+  var input = document.getElementById('input-' + id);
+  var name = input.value.trim();
+  var msg = document.getElementById('msg-' + id);
+  var err = document.getElementById('err-' + id);
+  msg.style.display = 'none'; err.style.display = 'none';
+  if (!name) { err.textContent = 'Please enter your name.'; err.style.display = 'block'; return; }
+  var signups = loadSignups();
+  var players = signups[id] || [];
+  var lower = players.map(function(p){ return p.toLowerCase(); });
+  if (lower.indexOf(name.toLowerCase()) !== -1) { err.textContent = 'You\'re already signed up!'; err.style.display = 'block'; return; }
+  players.push(name);
+  signups[id] = players;
+  saveSignups(signups);
+  input.value = '';
+  msg.textContent = 'You\'re in! See you on ' + name + '\'s day.';
+  msg.textContent = 'You\'re confirmed. See you out there!';
+  msg.style.display = 'block';
+  updateList(id, players);
+}
+
+function removeSignup(id) {
+  var input = document.getElementById('input-' + id);
+  var name = input.value.trim();
+  var err = document.getElementById('err-' + id);
+  var msg = document.getElementById('msg-' + id);
+  msg.style.display = 'none'; err.style.display = 'none';
+  if (!name) { err.textContent = 'Enter your name to remove yourself.'; err.style.display = 'block'; return; }
+  var signups = loadSignups();
+  var players = signups[id] || [];
+  var idx = players.map(function(p){ return p.toLowerCase(); }).indexOf(name.toLowerCase());
+  if (idx === -1) { err.textContent = 'Name not found in the signup list.'; err.style.display = 'block'; return; }
+  players.splice(idx, 1);
+  signups[id] = players;
+  saveSignups(signups);
+  input.value = '';
+  msg.textContent = 'Removed. Hope to see you next time.';
+  msg.style.display = 'block';
+  updateList(id, players);
+}
+
+function updateList(id, players) {
+  document.getElementById('count-' + id).textContent = players.length + ' confirmed';
+  var list = document.getElementById('list-' + id);
+  list.innerHTML = players.map(function(p){ return '<span class="signed-up-chip">' + esc(p) + '</span>'; }).join('');
+}
+
+render();
+</script>
+</body>
+</html>
