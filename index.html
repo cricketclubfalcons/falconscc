@@ -51,51 +51,50 @@
       padding: 5px 16px; border-radius: 20px; margin-bottom: 1.5rem;
       text-transform: uppercase;
     }
-    .hero h1 {
-      color: #fff; font-size: 56px; font-weight: 600;
-      line-height: 1.08; margin-bottom: 1.25rem; letter-spacing: -0.025em;
-    }
+    .hero h1 { color: #fff; font-size: 56px; font-weight: 600; line-height: 1.08; margin-bottom: 1.25rem; letter-spacing: -0.025em; }
     .hero h1 span { color: #1E88E5; }
     .hero-sub { color: #777; font-size: 17px; max-width: 460px; margin: 0 auto 2.5rem; line-height: 1.65; }
     .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn-primary {
-      background: #1565C0; color: #fff; font-size: 14px;
-      padding: 13px 30px; border-radius: 5px; cursor: pointer;
-      border: none; font-family: inherit; text-decoration: none; display: inline-block;
-    }
+    .btn-primary { background: #1565C0; color: #fff; font-size: 14px; padding: 13px 30px; border-radius: 5px; cursor: pointer; border: none; font-family: inherit; text-decoration: none; display: inline-block; }
     .btn-primary:hover { background: #1976D2; }
-    .btn-outline {
-      background: transparent; color: #ccc; font-size: 14px;
-      padding: 13px 30px; border-radius: 5px; cursor: pointer;
-      border: 1px solid #2a2a2a; font-family: inherit; text-decoration: none; display: inline-block;
-    }
+    .btn-outline { background: transparent; color: #ccc; font-size: 14px; padding: 13px 30px; border-radius: 5px; cursor: pointer; border: 1px solid #2a2a2a; font-family: inherit; text-decoration: none; display: inline-block; }
     .btn-outline:hover { border-color: #444; color: #fff; }
-    .hero-stats {
-      display: flex; gap: 3rem; justify-content: center;
-      margin-top: 4rem; padding-top: 3rem;
-      border-top: 1px solid #181818; flex-wrap: wrap;
-    }
+    .hero-stats { display: flex; gap: 3rem; justify-content: center; margin-top: 4rem; padding-top: 3rem; border-top: 1px solid #181818; flex-wrap: wrap; }
     .hero-stat { text-align: center; }
     .hero-stat-num { color: #fff; font-size: 28px; font-weight: 600; }
     .hero-stat-label { color: #444; font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; margin-top: 3px; }
 
-    .about { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
     .section-label { color: #1E88E5; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; font-weight: 500; }
     .section-title { font-size: 32px; font-weight: 600; color: #fff; margin-bottom: 1rem; line-height: 1.2; }
     .section-body { color: #666; font-size: 15px; line-height: 1.7; max-width: 580px; }
+
+    .about { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
     .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 3rem; }
     .about-card { background: #111; border: 0.5px solid #1e1e1e; border-radius: 12px; padding: 1.5rem; }
-    .about-card-icon {
-      width: 36px; height: 36px; border-radius: 8px;
-      background: #1565C012; border: 1px solid #1565C030;
-      display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
-    }
+    .about-card-icon { width: 36px; height: 36px; border-radius: 8px; background: #1565C012; border: 1px solid #1565C030; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
     .about-card-icon svg { width: 16px; height: 16px; fill: #1E88E5; }
     .about-card h3 { font-size: 15px; font-weight: 500; color: #e0e0e0; margin-bottom: 0.5rem; }
     .about-card p { font-size: 13px; color: #555; line-height: 1.6; }
 
     hr { border: none; border-top: 0.5px solid #181818; margin: 0 2rem; }
 
+    /* SCHEDULE */
+    .schedule { padding: 6rem 2rem; max-width: 960px; margin: 0 auto; }
+    .schedule-wrap { overflow-x: auto; border-radius: 10px; border: 0.5px solid #1e1e1e; margin-top: 2rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead tr { background: #111; border-bottom: 1px solid #1e1e1e; }
+    thead th { padding: 12px 16px; text-align: left; color: #555; font-weight: 500; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+    tbody tr { border-bottom: 0.5px solid #141414; transition: background 0.15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #111; }
+    tbody td { padding: 13px 16px; color: #aaa; white-space: nowrap; }
+    td.date { color: #fff; font-weight: 500; }
+    td.opponent { color: #e0e0e0; }
+    td.venue { color: #666; font-size: 12px; }
+    .tbd { color: #333 !important; font-style: italic; }
+    .badge-playoff { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; background: #1565C030; color: #90caf9; border: 1px solid #1565C060; margin-left: 6px; }
+
+    /* JOIN */
     .join-section { background: #0a0a0a; padding: 6rem 2rem; text-align: center; }
     .join-inner { max-width: 520px; margin: 0 auto; }
     .join-inner .section-title { color: #fff; }
@@ -103,34 +102,17 @@
     .join-form { background: #111; border: 0.5px solid #1e1e1e; border-radius: 12px; padding: 2rem; text-align: left; }
     .form-row { margin-bottom: 1rem; }
     .form-label { font-size: 12px; color: #555; margin-bottom: 6px; display: block; letter-spacing: 0.04em; }
-    .form-input {
-      width: 100%; padding: 10px 14px;
-      background: #0a0a0a; border: 0.5px solid #2a2a2a;
-      border-radius: 5px; color: #e5e5e5; font-size: 14px;
-      font-family: inherit; outline: none; transition: border-color 0.2s;
-    }
+    .form-input { width: 100%; padding: 10px 14px; background: #0a0a0a; border: 0.5px solid #2a2a2a; border-radius: 5px; color: #e5e5e5; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; }
     .form-input:focus { border-color: #1565C0; }
     .form-input::placeholder { color: #333; }
     .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .btn-submit {
-      width: 100%; background: #1565C0; color: #fff;
-      padding: 12px; border: none; border-radius: 5px;
-      font-size: 14px; font-family: inherit; cursor: pointer; margin-top: 0.5rem;
-      transition: background 0.2s;
-    }
+    .btn-submit { width: 100%; background: #1565C0; color: #fff; padding: 12px; border: none; border-radius: 5px; font-size: 14px; font-family: inherit; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; }
     .btn-submit:hover { background: #1976D2; }
     .btn-submit:disabled { background: #333; cursor: not-allowed; }
-    .form-success {
-      display: none; text-align: center; padding: 2rem 1rem;
-      color: #4ade80; font-size: 15px; line-height: 1.6;
-    }
+    .form-success { display: none; text-align: center; padding: 2rem 1rem; color: #4ade80; font-size: 15px; line-height: 1.6; }
     .form-error { display: none; color: #f87171; font-size: 13px; margin-top: 0.5rem; text-align: center; }
 
-    footer {
-      background: #050505; padding: 2rem;
-      border-top: 0.5px solid #111;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
-    }
+    footer { background: #050505; padding: 2rem; border-top: 0.5px solid #111; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
     .footer-left { color: #2a2a2a; font-size: 12px; }
     .footer-left span { color: #3a3a3a; }
     .footer-links { display: flex; gap: 1.5rem; }
@@ -156,6 +138,8 @@
   </a>
   <div class="nav-links">
     <a href="#about">About</a>
+    <a href="team.html">Team</a>
+    <a href="#schedule">Schedule</a>
     <a href="#join">Join</a>
   </div>
   <a class="nav-cta" href="#join">Join the club</a>
@@ -172,18 +156,9 @@
       <a class="btn-outline" href="#about">Learn more</a>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-num">2025</div>
-        <div class="hero-stat-label">Founded</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">SCL</div>
-        <div class="hero-stat-label">League</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">CT</div>
-        <div class="hero-stat-label">Southern Connecticut</div>
-      </div>
+      <div class="hero-stat"><div class="hero-stat-num">2025</div><div class="hero-stat-label">Founded</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">SCL</div><div class="hero-stat-label">League</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">CT</div><div class="hero-stat-label">Southern Connecticut</div></div>
     </div>
   </div>
 </section>
@@ -194,33 +169,59 @@
   <p class="section-body">Falcon CC was founded in 2025 with a mission to grow cricket in Southern Connecticut. We compete in the SCL league and welcome players of all skill levels — from seasoned veterans to those just picking up a bat.</p>
   <div class="about-grid">
     <div class="about-card">
-      <div class="about-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-      </div>
+      <div class="about-card-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg></div>
       <h3>Competitive play</h3>
       <p>We compete in the SCL (Southern Connecticut League), with regular fixtures across the season.</p>
     </div>
     <div class="about-card">
-      <div class="about-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-      </div>
+      <div class="about-card-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
       <h3>Open to all</h3>
       <p>All backgrounds, ages, and skill levels are welcome. We believe cricket is better when it's inclusive.</p>
     </div>
     <div class="about-card">
-      <div class="about-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      </div>
+      <div class="about-card-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
       <h3>Fresh start</h3>
       <p>Founded in 2025, we're building something special from the ground up in Connecticut.</p>
     </div>
     <div class="about-card">
-      <div class="about-card-icon">
-        <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
-      </div>
+      <div class="about-card-icon"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg></div>
       <h3>Regular fixtures</h3>
       <p>Scheduled matches throughout the season so you always have a game to look forward to.</p>
     </div>
+  </div>
+</section>
+
+<hr>
+
+<section class="schedule" id="schedule">
+  <div class="section-label">2026 Season</div>
+  <h2 class="section-title">Schedule</h2>
+  <div class="schedule-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Day</th>
+          <th>Time</th>
+          <th>Opponent</th>
+          <th>Venue</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="date">Apr 25</td><td>Saturday</td><td>9:50 AM</td><td class="opponent">Danbury</td><td class="venue">Danbury</td></tr>
+        <tr><td class="date">Apr 26</td><td>Sunday</td><td>2:00 PM</td><td class="opponent">Danbury</td><td class="venue">Danbury</td></tr>
+        <tr><td class="date">May 2</td><td>Saturday</td><td>2:00 PM</td><td class="opponent">CCA CC</td><td class="venue">West Haven</td></tr>
+        <tr><td class="date">May 3</td><td>Sunday</td><td>2:00 PM</td><td class="opponent">Danbury 2</td><td class="venue">Danbury</td></tr>
+        <tr><td class="date">May 9</td><td>Saturday</td><td>9:50 AM</td><td class="opponent">New Haven CC</td><td class="venue">New Milford</td></tr>
+        <tr><td class="date">May 16</td><td>Saturday</td><td>2:00 PM</td><td class="opponent">Bridgeport</td><td class="venue">Norwalk</td></tr>
+        <tr><td class="date">May 17</td><td>Sunday</td><td>9:50 AM</td><td class="opponent">Dogs</td><td class="venue">New Milford</td></tr>
+        <tr><td class="date">May 30</td><td>Saturday</td><td>2:00 PM</td><td class="opponent">West Haven</td><td class="venue">Danbury</td></tr>
+        <tr><td class="date">May 31</td><td>Sunday</td><td>9:50 AM</td><td class="opponent">GreenWave</td><td class="venue">Clinton, NH</td></tr>
+        <tr><td class="date">Jun 6</td><td>Saturday</td><td>2:00 PM</td><td class="opponent">Eagles</td><td class="venue">Kimberly, NH</td></tr>
+        <tr><td class="date">Jun 13</td><td>Saturday</td><td class="tbd">TBD</td><td class="opponent">QF <span class="badge-playoff">Playoff</span></td><td class="tbd">TBD</td></tr>
+        <tr><td class="date">Jun 14</td><td>Sunday</td><td class="tbd">TBD</td><td class="opponent">SF → Final <span class="badge-playoff">Playoff</span></td><td class="tbd">TBD</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -266,7 +267,7 @@
       </form>
       <div class="form-success" id="form-success">
         Welcome to the Falcons!<br>
-        <span style="color:#888;font-size:13px;">We've received your interest and will be in touch at your email shortly.</span>
+        <span style="color:#888;font-size:13px;">We've received your interest and will be in touch shortly.</span>
       </div>
     </div>
   </div>
@@ -276,6 +277,8 @@
   <div class="footer-left">&copy; 2025 <span>Falcon CC</span> &nbsp;·&nbsp; SCL League &nbsp;·&nbsp; Southern Connecticut</div>
   <div class="footer-links">
     <a href="#about">About</a>
+    <a href="team.html">Team</a>
+    <a href="#schedule">Schedule</a>
     <a href="#join">Join</a>
   </div>
 </footer>
@@ -285,13 +288,11 @@
   var btn = document.getElementById('submit-btn');
   var success = document.getElementById('form-success');
   var error = document.getElementById('form-error');
-
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     btn.disabled = true;
     btn.textContent = 'Sending...';
     error.style.display = 'none';
-
     fetch(form.action, {
       method: 'POST',
       body: new FormData(form),
