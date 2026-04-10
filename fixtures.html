@@ -45,7 +45,6 @@
     .btn-unsign:hover { background: #fef2f2; }
     .signup-count { font-size: 11px; color: #aaa; text-align: right; }
 
-    /* Signup panel */
     .signup-panel { display: none; margin-top: 1rem; padding: 1rem 1.25rem; background: #f8f9ff; border-radius: 8px; border: 1px solid #e0e8ff; }
     .signup-panel.open { display: block; }
     .signup-panel-title { font-size: 13px; font-weight: 600; color: #1565C0; margin-bottom: 0.75rem; }
@@ -53,7 +52,7 @@
     .signup-input { padding: 8px 12px; border: 1px solid #dde3f0; border-radius: 4px; font-size: 13px; font-family: inherit; outline: none; width: 200px; }
     .signup-input:focus { border-color: #1565C0; }
     .btn-confirm { background: #1565C0; color: #fff; font-size: 13px; padding: 8px 16px; border-radius: 4px; border: none; cursor: pointer; font-family: inherit; }
-    .btn-confirm:hover { background: #1976D2; }
+    .btn-remove { background: #fff; color: #dc2626; font-size: 13px; padding: 8px 16px; border-radius: 4px; border: 1px solid #fca5a5; cursor: pointer; font-family: inherit; }
     .signup-msg { font-size: 12px; color: #16a34a; margin-top: 0.5rem; display: none; }
     .signup-error { font-size: 12px; color: #dc2626; margin-top: 0.5rem; display: none; }
     .signed-up-list { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 6px; }
@@ -85,6 +84,7 @@
     <a href="index.html#about">About</a>
     <a href="team.html">Team</a>
     <a href="fixtures.html" class="active">Fixtures</a>
+    <a href="results.html">Results</a>
     <a href="index.html#join">Join</a>
   </div>
   <a class="nav-cta" href="index.html#join">Join us</a>
@@ -97,7 +97,7 @@
 </div>
 
 <div class="fixtures-wrap" id="fixtures-wrap">
-  <!-- Rendered by JS -->
+  <div style="padding:2rem 0;color:#aaa;font-size:14px;">Loading fixtures…</div>
 </div>
 
 <footer>
@@ -106,11 +106,15 @@
     <a href="index.html">Home</a>
     <a href="team.html">Team</a>
     <a href="fixtures.html">Fixtures</a>
+    <a href="results.html">Results</a>
     <a href="index.html#join">Join</a>
   </div>
 </footer>
 
 <script>
+var SUPABASE_URL = 'https://ufffpsntjptbhgjgvfjg.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_QqgFsWUrAuLvTG5HTucUJw_1pkLpGB4';
+
 var FIXTURES = [
   { id:'apr25', day:25, month:'Apr', weekday:'Sat', opponent:'Danbury', time:'9:50 AM', venue:'Danbury', type:'upcoming' },
   { id:'apr26', day:26, month:'Apr', weekday:'Sun', opponent:'Danbury', time:'2:00 PM', venue:'Danbury', type:'upcoming' },
@@ -126,49 +130,61 @@ var FIXTURES = [
   { id:'jun14', day:14, month:'Jun', weekday:'Sun', opponent:'Semi Final & Final', time:'TBD', venue:'TBD', type:'playoff' }
 ];
 
-var STORAGE_KEY = 'falconcc_signups';
+var allSignups = {};
 
-function loadSignups() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+function api(path, opts) {
+  return fetch(SUPABASE_URL + '/rest/v1/' + path, Object.assign({
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    }
+  }, opts)).then(function(r) { return r.json(); });
 }
-function saveSignups(data) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+
+function loadAll() {
+  return api('signups?select=id,name').then(function(rows) {
+    allSignups = {};
+    (rows || []).forEach(function(r) {
+      if (!allSignups[r.id]) allSignups[r.id] = [];
+      allSignups[r.id].push(r.name);
+    });
+  });
 }
 
 function render() {
-  var signups = loadSignups();
   var wrap = document.getElementById('fixtures-wrap');
   var months = {};
   FIXTURES.forEach(function(f) { if (!months[f.month]) months[f.month] = []; months[f.month].push(f); });
   var html = '';
   var first = true;
   Object.keys(months).forEach(function(m) {
-    html += '<div class="fixture-group-label' + (first ? ' style="border-top:none;margin-top:0"' : '') + '">' + m + '</div>';
+    html += '<div class="fixture-group-label">' + m + '</div>';
     first = false;
     months[m].forEach(function(f) {
-      var players = signups[f.id] || [];
-      var badge = f.type === 'playoff' ? 'badge-playoff">Playoff' : 'badge-upcoming">Upcoming';
+      var players = allSignups[f.id] || [];
+      var badge = f.type === 'playoff' ? '<span class="badge badge-playoff">Playoff</span>' : '<span class="badge badge-upcoming">Upcoming</span>';
       var chips = players.map(function(p) { return '<span class="signed-up-chip">' + esc(p) + '</span>'; }).join('');
       html += '<div class="fixture-card" id="card-' + f.id + '">' +
         '<div class="fixture-main">' +
           '<div class="fixture-date-block"><div class="fixture-day">' + f.day + '</div><div class="fixture-month">' + f.month + '</div><div class="fixture-weekday">' + f.weekday + '</div></div>' +
           '<div><div class="fixture-opponent">Falcon CC vs ' + esc(f.opponent) + '</div><div class="fixture-meta">' + f.time + '<div class="fixture-meta-dot"></div>' + esc(f.venue) + '</div></div>' +
-          '<div class="fixture-actions">' +
-            '<span class="badge ' + badge + '</span>' +
+          '<div class="fixture-actions">' + badge +
             '<button class="btn-signup" onclick="togglePanel(\'' + f.id + '\')">Sign up</button>' +
             '<div class="signup-count" id="count-' + f.id + '">' + players.length + ' confirmed</div>' +
           '</div>' +
         '</div>' +
         '<div class="signup-panel" id="panel-' + f.id + '">' +
-          '<div class="signup-panel-title">Confirm availability for ' + f.day + ' ' + f.month + ' vs ' + esc(f.opponent) + '</div>' +
+          '<div class="signup-panel-title">Confirm for ' + f.day + ' ' + f.month + ' vs ' + esc(f.opponent) + '</div>' +
           '<div class="signup-input-row">' +
             '<input class="signup-input" id="input-' + f.id + '" placeholder="Your name" onkeydown="if(event.key===\'Enter\')confirmSignup(\'' + f.id + '\')">' +
             '<button class="btn-confirm" onclick="confirmSignup(\'' + f.id + '\')">I\'m in</button>' +
-            '<button class="btn-unsign" onclick="removeSignup(\'' + f.id + '\')">Remove me</button>' +
+            '<button class="btn-remove" onclick="removeSignup(\'' + f.id + '\')">Remove me</button>' +
           '</div>' +
           '<div class="signup-msg" id="msg-' + f.id + '"></div>' +
           '<div class="signup-error" id="err-' + f.id + '"></div>' +
-          (players.length ? '<div class="signed-up-list" id="list-' + f.id + '">' + chips + '</div>' : '<div class="signed-up-list" id="list-' + f.id + '"></div>') +
+          '<div class="signed-up-list" id="list-' + f.id + '">' + chips + '</div>' +
         '</div>' +
       '</div>';
     });
@@ -191,47 +207,46 @@ function confirmSignup(id) {
   var err = document.getElementById('err-' + id);
   msg.style.display = 'none'; err.style.display = 'none';
   if (!name) { err.textContent = 'Please enter your name.'; err.style.display = 'block'; return; }
-  var signups = loadSignups();
-  var players = signups[id] || [];
-  var lower = players.map(function(p){ return p.toLowerCase(); });
-  if (lower.indexOf(name.toLowerCase()) !== -1) { err.textContent = 'You\'re already signed up!'; err.style.display = 'block'; return; }
-  players.push(name);
-  signups[id] = players;
-  saveSignups(signups);
-  input.value = '';
-  msg.textContent = 'You\'re in! See you on ' + name + '\'s day.';
-  msg.textContent = 'You\'re confirmed. See you out there!';
-  msg.style.display = 'block';
-  updateList(id, players);
+  var players = allSignups[id] || [];
+  if (players.map(function(p){return p.toLowerCase();}).indexOf(name.toLowerCase()) !== -1) {
+    err.textContent = 'You\'re already signed up!'; err.style.display = 'block'; return;
+  }
+  api('signups', { method:'POST', body: JSON.stringify({ id: id, name: name }) }).then(function() {
+    if (!allSignups[id]) allSignups[id] = [];
+    allSignups[id].push(name);
+    input.value = '';
+    msg.textContent = 'You\'re confirmed. See you out there!';
+    msg.style.display = 'block';
+    updateList(id);
+  }).catch(function() { err.textContent = 'Error saving. Try again.'; err.style.display = 'block'; });
 }
 
 function removeSignup(id) {
   var input = document.getElementById('input-' + id);
   var name = input.value.trim();
-  var err = document.getElementById('err-' + id);
   var msg = document.getElementById('msg-' + id);
+  var err = document.getElementById('err-' + id);
   msg.style.display = 'none'; err.style.display = 'none';
   if (!name) { err.textContent = 'Enter your name to remove yourself.'; err.style.display = 'block'; return; }
-  var signups = loadSignups();
-  var players = signups[id] || [];
-  var idx = players.map(function(p){ return p.toLowerCase(); }).indexOf(name.toLowerCase());
+  var players = allSignups[id] || [];
+  var idx = players.map(function(p){return p.toLowerCase();}).indexOf(name.toLowerCase());
   if (idx === -1) { err.textContent = 'Name not found in the signup list.'; err.style.display = 'block'; return; }
-  players.splice(idx, 1);
-  signups[id] = players;
-  saveSignups(signups);
-  input.value = '';
-  msg.textContent = 'Removed. Hope to see you next time.';
-  msg.style.display = 'block';
-  updateList(id, players);
+  api('signups?id=eq.' + encodeURIComponent(id) + '&name=eq.' + encodeURIComponent(players[idx]), { method:'DELETE' }).then(function() {
+    allSignups[id].splice(idx, 1);
+    input.value = '';
+    msg.textContent = 'Removed. Hope to see you next time.';
+    msg.style.display = 'block';
+    updateList(id);
+  }).catch(function() { err.textContent = 'Error removing. Try again.'; err.style.display = 'block'; });
 }
 
-function updateList(id, players) {
+function updateList(id) {
+  var players = allSignups[id] || [];
   document.getElementById('count-' + id).textContent = players.length + ' confirmed';
-  var list = document.getElementById('list-' + id);
-  list.innerHTML = players.map(function(p){ return '<span class="signed-up-chip">' + esc(p) + '</span>'; }).join('');
+  document.getElementById('list-' + id).innerHTML = players.map(function(p){ return '<span class="signed-up-chip">' + esc(p) + '</span>'; }).join('');
 }
 
-render();
+loadAll().then(render);
 </script>
 </body>
 </html>
