@@ -10,21 +10,15 @@
     html { scroll-behavior: smooth; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #080808; color: #e5e5e5; line-height: 1.6; }
 
-    /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
       background: #0a0a0aee; backdrop-filter: blur(12px);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2rem; height: 60px;
+      padding: 0 2rem; height: 64px;
       border-bottom: 1px solid #1565C0;
     }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo-icon {
-      width: 36px; height: 36px; border-radius: 50%;
-      background: #1565C0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px; font-weight: 600; color: #fff;
-    }
+    .nav-logo img { height: 44px; width: 44px; object-fit: contain; }
     .nav-logo-text { color: #fff; font-size: 15px; font-weight: 500; letter-spacing: 0.03em; }
     .nav-links { display: flex; gap: 2rem; }
     .nav-links a { color: #888; font-size: 13px; text-decoration: none; transition: color 0.2s; }
@@ -32,11 +26,10 @@
     .nav-cta {
       background: #1565C0; color: #fff; font-size: 13px;
       padding: 7px 18px; border-radius: 4px; cursor: pointer;
-      border: none; font-family: inherit; letter-spacing: 0.02em; text-decoration: none;
+      border: none; font-family: inherit; text-decoration: none;
     }
     .nav-cta:hover { background: #1976D2; }
 
-    /* HERO */
     .hero {
       min-height: 90vh;
       display: flex; align-items: center; justify-content: center;
@@ -50,11 +43,12 @@
       pointer-events: none;
     }
     .hero-inner { position: relative; z-index: 1; width: 100%; max-width: 700px; margin: 0 auto; }
+    .hero-logo { width: 140px; height: 140px; object-fit: contain; margin: 0 auto 1.5rem; display: block; }
     .hero-badge {
       display: inline-block;
       background: #1565C012; border: 1px solid #1565C050;
       color: #60a5fa; font-size: 12px; letter-spacing: 0.08em;
-      padding: 5px 16px; border-radius: 20px; margin-bottom: 2rem;
+      padding: 5px 16px; border-radius: 20px; margin-bottom: 1.5rem;
       text-transform: uppercase;
     }
     .hero h1 {
@@ -85,40 +79,28 @@
     .hero-stat-num { color: #fff; font-size: 28px; font-weight: 600; }
     .hero-stat-label { color: #444; font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; margin-top: 3px; }
 
-    /* ABOUT */
     .about { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; }
     .section-label { color: #1E88E5; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.75rem; font-weight: 500; }
     .section-title { font-size: 32px; font-weight: 600; color: #fff; margin-bottom: 1rem; line-height: 1.2; }
     .section-body { color: #666; font-size: 15px; line-height: 1.7; max-width: 580px; }
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 3rem;
-    }
-    .about-card {
-      background: #111; border: 0.5px solid #1e1e1e;
-      border-radius: 12px; padding: 1.5rem;
-    }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 3rem; }
+    .about-card { background: #111; border: 0.5px solid #1e1e1e; border-radius: 12px; padding: 1.5rem; }
     .about-card-icon {
       width: 36px; height: 36px; border-radius: 8px;
       background: #1565C012; border: 1px solid #1565C030;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 1rem;
+      display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
     }
     .about-card-icon svg { width: 16px; height: 16px; fill: #1E88E5; }
     .about-card h3 { font-size: 15px; font-weight: 500; color: #e0e0e0; margin-bottom: 0.5rem; }
     .about-card p { font-size: 13px; color: #555; line-height: 1.6; }
 
-    /* DIVIDER */
     hr { border: none; border-top: 0.5px solid #181818; margin: 0 2rem; }
 
-    /* JOIN */
     .join-section { background: #0a0a0a; padding: 6rem 2rem; text-align: center; }
     .join-inner { max-width: 520px; margin: 0 auto; }
     .join-inner .section-title { color: #fff; }
     .join-inner .section-body { color: #555; margin: 0 auto 2.5rem; }
-    .join-form {
-      background: #111; border: 0.5px solid #1e1e1e;
-      border-radius: 12px; padding: 2rem; text-align: left;
-    }
+    .join-form { background: #111; border: 0.5px solid #1e1e1e; border-radius: 12px; padding: 2rem; text-align: left; }
     .form-row { margin-bottom: 1rem; }
     .form-label { font-size: 12px; color: #555; margin-bottom: 6px; display: block; letter-spacing: 0.04em; }
     .form-input {
@@ -137,12 +119,13 @@
       transition: background 0.2s;
     }
     .btn-submit:hover { background: #1976D2; }
+    .btn-submit:disabled { background: #333; cursor: not-allowed; }
     .form-success {
-      display: none; text-align: center; padding: 1.5rem;
-      color: #4ade80; font-size: 14px;
+      display: none; text-align: center; padding: 2rem 1rem;
+      color: #4ade80; font-size: 15px; line-height: 1.6;
     }
+    .form-error { display: none; color: #f87171; font-size: 13px; margin-top: 0.5rem; text-align: center; }
 
-    /* FOOTER */
     footer {
       background: #050505; padding: 2rem;
       border-top: 0.5px solid #111;
@@ -154,22 +137,21 @@
     .footer-links a { color: #2a2a2a; font-size: 12px; text-decoration: none; }
     .footer-links a:hover { color: #555; }
 
-    /* RESPONSIVE */
     @media (max-width: 640px) {
       .hero h1 { font-size: 36px; }
       .about-grid { grid-template-columns: 1fr; }
       .form-row-2 { grid-template-columns: 1fr; }
       .nav-links { display: none; }
       .hero-stats { gap: 2rem; }
+      .hero-logo { width: 100px; height: 100px; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">
-    <div class="nav-logo-icon">F</div>
+    <img src="logo.png" alt="Falcon CC logo">
     <span class="nav-logo-text">Falcon CC</span>
   </a>
   <div class="nav-links">
@@ -179,9 +161,9 @@
   <a class="nav-cta" href="#join">Join the club</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
+    <img class="hero-logo" src="logo.png" alt="Falcon CC">
     <div class="hero-badge">Est. 2025 &nbsp;·&nbsp; SCL League</div>
     <h1>Play for <span>Falcon CC</span></h1>
     <p class="hero-sub">A competitive cricket club based in Southern Connecticut. Playing in the SCL league, built for players who love the game.</p>
@@ -206,7 +188,6 @@
   </div>
 </section>
 
-<!-- ABOUT -->
 <section class="about" id="about">
   <div class="section-label">About the club</div>
   <h2 class="section-title">Cricket that brings the community together</h2>
@@ -245,48 +226,52 @@
 
 <hr>
 
-<!-- JOIN -->
 <section class="join-section" id="join">
   <div class="join-inner">
     <div class="section-label">Join us</div>
     <h2 class="section-title">Become a Falcon</h2>
     <p class="section-body">Interested in playing for Falcon CC? Fill out the form below and we'll be in touch.</p>
     <div class="join-form">
-      <div class="form-row-2">
-        <div class="form-row">
-          <label class="form-label">First name</label>
-          <input class="form-input" type="text" placeholder="First name" id="fname">
+      <form id="join-form" action="https://formspree.io/f/mbdpvdlq" method="POST">
+        <div class="form-row-2">
+          <div class="form-row">
+            <label class="form-label">First name</label>
+            <input class="form-input" type="text" name="first_name" placeholder="First name" required>
+          </div>
+          <div class="form-row">
+            <label class="form-label">Last name</label>
+            <input class="form-input" type="text" name="last_name" placeholder="Last name" required>
+          </div>
         </div>
         <div class="form-row">
-          <label class="form-label">Last name</label>
-          <input class="form-input" type="text" placeholder="Last name" id="lname">
+          <label class="form-label">Email address</label>
+          <input class="form-input" type="email" name="email" placeholder="you@email.com" required>
         </div>
+        <div class="form-row">
+          <label class="form-label">Playing role</label>
+          <select class="form-input" name="role" required>
+            <option value="" disabled selected>Select your role</option>
+            <option>Batsman</option>
+            <option>Bowler</option>
+            <option>All-rounder</option>
+            <option>Wicketkeeper</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Anything else?</label>
+          <textarea class="form-input" name="message" rows="3" placeholder="Experience level, availability, etc." style="resize:vertical;"></textarea>
+        </div>
+        <button class="btn-submit" type="submit" id="submit-btn">Submit interest</button>
+        <div class="form-error" id="form-error">Something went wrong. Please try again or email us directly.</div>
+      </form>
+      <div class="form-success" id="form-success">
+        Welcome to the Falcons!<br>
+        <span style="color:#888;font-size:13px;">We've received your interest and will be in touch at your email shortly.</span>
       </div>
-      <div class="form-row">
-        <label class="form-label">Email address</label>
-        <input class="form-input" type="email" placeholder="you@email.com" id="email">
-      </div>
-      <div class="form-row">
-        <label class="form-label">Playing role</label>
-        <select class="form-input" id="role">
-          <option value="" disabled selected>Select your role</option>
-          <option>Batsman</option>
-          <option>Bowler</option>
-          <option>All-rounder</option>
-          <option>Wicketkeeper</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <label class="form-label">Anything else?</label>
-        <textarea class="form-input" rows="3" placeholder="Experience level, availability, etc." id="msg" style="resize: vertical;"></textarea>
-      </div>
-      <button class="btn-submit" onclick="handleSubmit()">Submit interest</button>
-      <div class="form-success" id="success">Thanks! We'll be in touch soon. Welcome to the Falcons.</div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-left">&copy; 2025 <span>Falcon CC</span> &nbsp;·&nbsp; SCL League &nbsp;·&nbsp; Southern Connecticut</div>
   <div class="footer-links">
@@ -296,16 +281,36 @@
 </footer>
 
 <script>
-  function handleSubmit() {
-    var fname = document.getElementById('fname').value.trim();
-    var email = document.getElementById('email').value.trim();
-    if (!fname || !email) { alert('Please enter your name and email.'); return; }
-    document.querySelector('.join-form form, .join-form > *:not(.form-success)');
-    var inputs = document.querySelectorAll('.form-input, .btn-submit');
-    inputs.forEach(function(el) { el.style.display = 'none'; });
-    document.querySelector('.form-label') && document.querySelectorAll('.form-label, .form-row, .form-row-2').forEach(function(el){ el.style.display='none'; });
-    document.getElementById('success').style.display = 'block';
-  }
+  var form = document.getElementById('join-form');
+  var btn = document.getElementById('submit-btn');
+  var success = document.getElementById('form-success');
+  var error = document.getElementById('form-error');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    error.style.display = 'none';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(res) {
+      if (res.ok) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        error.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Submit interest';
+      }
+    }).catch(function() {
+      error.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Submit interest';
+    });
+  });
 </script>
 
 </body>
