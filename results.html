@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Falcon CC — Results</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #111; line-height: 1.6; }
+    nav { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid #e8e8e8; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 60px; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { height: 38px; width: 38px; object-fit: contain; }
+    .nav-logo-text { color: #111; font-size: 15px; font-weight: 600; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { color: #666; font-size: 13px; text-decoration: none; }
+    .nav-links a:hover, .nav-links a.active { color: #111; }
+    .nav-cta { background: #1565C0; color: #fff; font-size: 13px; padding: 7px 16px; border-radius: 5px; text-decoration: none; }
+
+    .page-header { padding: 4rem 2.5rem 2rem; max-width: 800px; margin: 0 auto; }
+    .page-header-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+    .page-header-top { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .page-header h1 { font-size: 36px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; }
+    .page-header p { font-size: 14px; color: #888; margin-top: 0.5rem; }
+
+    /* Year switcher */
+    .year-switcher { display: flex; gap: 6px; }
+    .year-btn { font-size: 13px; padding: 5px 14px; border-radius: 20px; border: 1px solid #e0e0e0; background: #fff; color: #666; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    .year-btn.active { background: #1565C0; color: #fff; border-color: #1565C0; }
+    .year-btn:hover:not(.active) { border-color: #aaa; color: #111; }
+
+    /* Season summary */
+    .season-summary { max-width: 800px; margin: 0 auto; padding: 0 2.5rem 1rem; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .summary-pill { font-size: 13px; padding: 5px 14px; border-radius: 20px; font-weight: 500; }
+    .pill-w { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+    .pill-l { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .pill-nr { background: #f5f5f5; color: #888; border: 1px solid #e0e0e0; }
+
+    /* Results */
+    .results-wrap { max-width: 800px; margin: 0 auto; padding: 0 2.5rem 5rem; }
+    .result-group-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; padding: 1.5rem 0 0.75rem; border-top: 1px solid #f0f0f0; margin-top: 1rem; }
+    .result-group-label:first-child { border-top: none; margin-top: 0; }
+
+    .result-card { padding: 1.25rem 0; border-bottom: 1px solid #f5f5f5; }
+    .result-main { display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 1.5rem; }
+    .result-date-block { text-align: center; }
+    .result-day { font-size: 24px; font-weight: 700; color: #0a0a0a; line-height: 1; }
+    .result-month { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+    .result-weekday { font-size: 11px; color: #ccc; margin-top: 1px; }
+    .result-opponent { font-size: 15px; font-weight: 600; color: #111; }
+    .result-meta { font-size: 12px; color: #aaa; margin-top: 3px; display: flex; gap: 8px; align-items: center; }
+    .result-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: #ddd; }
+
+    .badge { display: inline-block; font-size: 12px; padding: 4px 12px; border-radius: 20px; font-weight: 600; }
+    .badge-w { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+    .badge-l { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+    .badge-nr { background: #f5f5f5; color: #888; border: 1px solid #e0e0e0; }
+    .badge-upcoming { background: #eff6ff; color: #1565C0; border: 1px solid #bfdbfe; }
+
+    /* Scorecard */
+    .scorecard-toggle { margin-top: 0.75rem; }
+    .btn-scorecard { background: none; border: none; font-size: 12px; color: #1565C0; cursor: pointer; font-family: inherit; padding: 0; display: flex; align-items: center; gap: 4px; }
+    .btn-scorecard:hover { text-decoration: underline; }
+    .scorecard-img-wrap { display: none; margin-top: 0.75rem; }
+    .scorecard-img-wrap.open { display: block; }
+    .scorecard-img-wrap img { width: 100%; max-width: 600px; border-radius: 8px; border: 1px solid #eee; }
+
+    .no-results { font-size: 14px; color: #bbb; padding: 2rem 0; font-style: italic; }
+
+    footer { border-top: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-left { font-size: 12px; color: #bbb; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 12px; color: #bbb; text-decoration: none; }
+    .footer-links a:hover { color: #666; }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .result-main { grid-template-columns: 60px 1fr; }
+      .result-badge-col { display: none; }
+      .page-header h1 { font-size: 28px; }
+      .page-header-top { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="logo.png" alt="Falcon CC">
+    <span class="nav-logo-text">Falcon CC</span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="team.html">Team</a>
+    <a href="fixtures.html">Fixtures</a>
+    <a href="results.html" class="active">Results</a>
+    <a href="index.html#join">Join</a>
+  </div>
+  <a class="nav-cta" href="index.html#join">Join us</a>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-label">SCL League</div>
+  <div class="page-header-top">
+    <div>
+      <h1>Results</h1>
+      <p>Season scorecards and match outcomes.</p>
+    </div>
+    <div class="year-switcher">
+      <button class="year-btn" onclick="switchYear(2025, this)">2025</button>
+      <button class="year-btn active" onclick="switchYear(2026, this)">2026</button>
+      <button class="year-btn" onclick="switchYear(2027, this)">2027</button>
+    </div>
+  </div>
+</div>
+
+<div class="season-summary" id="season-summary"></div>
+<div class="results-wrap" id="results-wrap"></div>
+
+<footer>
+  <div class="footer-left">&copy; 2025 Falcon CC &nbsp;·&nbsp; SCL League &nbsp;·&nbsp; Southern Connecticut</div>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="team.html">Team</a>
+    <a href="fixtures.html">Fixtures</a>
+    <a href="results.html">Results</a>
+    <a href="index.html#join">Join</a>
+  </div>
+</footer>
+
+<script>
+// ============================================================
+// RESULTS CONFIG — UPDATE THIS AFTER EACH MATCH
+// result: 'W' = Win, 'L' = Loss, 'NR' = No Result, '' = upcoming
+// scorecard: filename inside scores/YEAR/ folder, or '' if none yet
+// ============================================================
+var RESULTS = {
+  2025: [
+    { id:'apr26', day:26, month:'Apr', weekday:'Sat', opponent:'New Haven Eagles CC',    time:'', venue:'', result:'NR', scorecard:'', note:'Abandoned' },
+    { id:'apr27', day:27, month:'Apr', weekday:'Sun', opponent:'New Haven Sarkar 11 CC', time:'', venue:'', result:'W',  scorecard:['apr27_innings1.jpg','apr27_innings2.jpg'], note:'Won by 6 wickets' },
+    { id:'may03', day:3,  month:'May', weekday:'Sat', opponent:'New Haven CC',           time:'', venue:'', result:'NR', scorecard:'', note:'Abandoned' },
+    { id:'may04', day:4,  month:'May', weekday:'Sun', opponent:'Danbury CC',             time:'', venue:'', result:'NR', scorecard:'', note:'Abandoned' },
+    { id:'may10', day:10, month:'May', weekday:'Sat', opponent:'CCA CC',                time:'', venue:'', result:'NR', scorecard:'', note:'Abandoned' },
+    { id:'may17', day:17, month:'May', weekday:'Sat', opponent:'Brass CC',              time:'', venue:'', result:'W',  scorecard:'', note:'Won by 7 wickets' },
+    { id:'may18', day:18, month:'May', weekday:'Sun', opponent:'New Milford CC',        time:'', venue:'', result:'W',  scorecard:'', note:'Won by 8 wickets' },
+    { id:'may31', day:31, month:'May', weekday:'Sat', opponent:'Norwalk Mad Dogs CC',   time:'', venue:'', result:'NR', scorecard:'', note:'Abandoned' },
+    { id:'jun01', day:1,  month:'Jun', weekday:'Sun', opponent:'Bridgeport CC',         time:'', venue:'', result:'W',  scorecard:'', note:'Won by 3 wickets' },
+    { id:'jun08', day:8,  month:'Jun', weekday:'Sun', opponent:'Stamford Super Kings CC',time:'',venue:'', result:'W',  scorecard:'', note:'Won by 87 runs' },
+    { id:'jun15', day:15, month:'Jun', weekday:'Sun', opponent:'New Haven Eagles CC',   time:'', venue:'', result:'W',  scorecard:'', note:'QF — Won by 5 wickets' },
+    { id:'jun21', day:21, month:'Jun', weekday:'Sat', opponent:'Bridgeport CC',         time:'', venue:'', result:'L',  scorecard:'', note:'SF — Lost by 14 runs' }
+  ],
+  2026: [
+    { id:'apr25', day:25, month:'Apr', weekday:'Sat', opponent:'Danbury',              time:'9:50 AM', venue:'Danbury',      result:'', scorecard:[], note:'' },
+    { id:'apr26', day:26, month:'Apr', weekday:'Sun', opponent:'Danbury',              time:'2:00 PM', venue:'Danbury',      result:'', scorecard:[], note:'' },
+    { id:'may02', day:2,  month:'May', weekday:'Sat', opponent:'CCA CC',              time:'2:00 PM', venue:'West Haven',   result:'', scorecard:[], note:'' },
+    { id:'may03', day:3,  month:'May', weekday:'Sun', opponent:'Danbury 2',           time:'2:00 PM', venue:'Danbury',      result:'', scorecard:[], note:'' },
+    { id:'may09', day:9,  month:'May', weekday:'Sat', opponent:'New Haven CC',        time:'9:50 AM', venue:'New Milford',  result:'', scorecard:[], note:'' },
+    { id:'may16', day:16, month:'May', weekday:'Sat', opponent:'Bridgeport',          time:'2:00 PM', venue:'Norwalk',      result:'', scorecard:[], note:'' },
+    { id:'may17', day:17, month:'May', weekday:'Sun', opponent:'Dogs',                time:'9:50 AM', venue:'New Milford',  result:'', scorecard:[], note:'' },
+    { id:'may30', day:30, month:'May', weekday:'Sat', opponent:'West Haven',          time:'2:00 PM', venue:'Danbury',      result:'', scorecard:[], note:'' },
+    { id:'may31', day:31, month:'May', weekday:'Sun', opponent:'GreenWave',           time:'9:50 AM', venue:'Clinton, NH',  result:'', scorecard:[], note:'' },
+    { id:'jun06', day:6,  month:'Jun', weekday:'Sat', opponent:'Eagles',              time:'2:00 PM', venue:'Kimberly, NH', result:'', scorecard:[], note:'' },
+    { id:'jun13', day:13, month:'Jun', weekday:'Sat', opponent:'Quarter Final',       time:'TBD',     venue:'TBD',          result:'', scorecard:[], note:'' },
+    { id:'jun14', day:14, month:'Jun', weekday:'Sun', opponent:'SF & Final',          time:'TBD',     venue:'TBD',          result:'', scorecard:[], note:'' }
+  ],
+  2027: []
+};
+// ============================================================
+
+var currentYear = 2026;
+var DEFAULT_YEAR = 2026;
+
+function switchYear(year, btn) {
+  currentYear = year;
+  document.querySelectorAll('.year-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  render();
+}
+
+function render() {
+  var fixtures = RESULTS[currentYear] || [];
+  var wrap = document.getElementById('results-wrap');
+  var summary = document.getElementById('season-summary');
+
+  if (!fixtures.length) {
+    wrap.innerHTML = '<div class="no-results">No fixtures added for ' + currentYear + ' yet.</div>';
+    summary.innerHTML = '';
+    return;
+  }
+
+  var w = 0, l = 0, nr = 0;
+  fixtures.forEach(function(f){ if(f.result==='W') w++; else if(f.result==='L') l++; else if(f.result==='NR') nr++; });
+
+  summary.innerHTML =
+    '<span class="summary-pill pill-w">' + w + ' Won</span>' +
+    '<span class="summary-pill pill-l">' + l + ' Lost</span>' +
+    (nr ? '<span class="summary-pill pill-nr">' + nr + ' No result</span>' : '');
+
+  var months = {};
+  fixtures.forEach(function(f){ if(!months[f.month]) months[f.month]=[]; months[f.month].push(f); });
+
+  var html = '';
+  var first = true;
+  Object.keys(months).forEach(function(m) {
+    html += '<div class="result-group-label">' + m + ' ' + currentYear + '</div>';
+    first = false;
+    months[m].forEach(function(f) {
+      var badgeHtml = '';
+      if (f.result === 'W') badgeHtml = '<span class="badge badge-w">Won</span>';
+      else if (f.result === 'L') badgeHtml = '<span class="badge badge-l">Lost</span>';
+      else if (f.result === 'NR') badgeHtml = '<span class="badge badge-nr">No result</span>';
+      else badgeHtml = '<span class="badge badge-upcoming">Upcoming</span>';
+
+      var scorecards = Array.isArray(f.scorecard) ? f.scorecard : (f.scorecard ? [f.scorecard] : []);
+      var scorecardHtml = '';
+      if (scorecards.length) {
+        var imgs = scorecards.map(function(sc, i) {
+          return '<div style="margin-bottom:0.75rem;">' +
+            '<div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Innings ' + (i+1) + '</div>' +
+            '<img src="scores/' + currentYear + '/' + esc(sc) + '" alt="Scorecard innings ' + (i+1) + '" style="width:100%;max-width:600px;border-radius:8px;border:1px solid #eee;">' +
+          '</div>';
+        }).join('');
+        scorecardHtml = '<div class="scorecard-toggle">' +
+          '<button class="btn-scorecard" onclick="toggleCard(\'' + f.id + '\')">▸ View scorecard</button>' +
+          '<div class="scorecard-img-wrap" id="sc-' + f.id + '">' + imgs + '</div>' +
+        '</div>';
+      }
+
+      html += '<div class="result-card">' +
+        '<div class="result-main">' +
+          '<div class="result-date-block"><div class="result-day">' + f.day + '</div><div class="result-month">' + f.month + '</div><div class="result-weekday">' + f.weekday + '</div></div>' +
+          '<div><div class="result-opponent">Falcon CC vs ' + esc(f.opponent) + '</div><div class="result-meta">' + (f.time ? f.time + '<div class="result-meta-dot"></div>' : '') + (f.venue ? esc(f.venue) : '') + (f.note ? '<div class="result-meta-dot"></div>' + esc(f.note) : '') + '</div></div>' +
+          '<div class="result-badge-col">' + badgeHtml + '</div>' +
+        '</div>' +
+        scorecardHtml +
+      '</div>';
+    });
+  });
+
+  wrap.innerHTML = html;
+}
+
+function toggleCard(id) {
+  var el = document.getElementById('sc-' + id);
+  var btn = el.previousElementSibling;
+  el.classList.toggle('open');
+  btn.textContent = el.classList.contains('open') ? '▾ Hide scorecard' : '▸ View scorecard';
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+render();
+</script>
+</body>
+</html>
