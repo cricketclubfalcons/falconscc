@@ -3,147 +3,273 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Falcon CC — Admin</title>
+  <title>Falcon CC — Southern Connecticut Cricket</title>
+  <meta name="description" content="Falcon CC is a competitive cricket club based in Southern Connecticut, playing in the SCL league. Founded 2025.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f8f8; color: #111; line-height: 1.6; min-height: 100vh; }
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #111; line-height: 1.6; }
 
-    /* PIN SCREEN */
-    .pin-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 2rem; }
-    .pin-logo { width: 56px; height: 56px; object-fit: contain; margin-bottom: 1.5rem; }
-    .pin-title { font-size: 20px; font-weight: 700; color: #111; margin-bottom: 0.5rem; }
-    .pin-sub { font-size: 13px; color: #888; margin-bottom: 2rem; }
-    .pin-input { font-size: 28px; letter-spacing: 0.5em; text-align: center; width: 160px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; font-family: monospace; }
-    .pin-input:focus { border-color: #1565C0; }
-    .btn-enter { margin-top: 1rem; background: #1565C0; color: #fff; font-size: 14px; padding: 10px 28px; border-radius: 5px; border: none; cursor: pointer; font-family: inherit; width: 160px; }
-    .btn-enter:hover { background: #1976D2; }
-    .pin-error { color: #dc2626; font-size: 13px; margin-top: 0.75rem; display: none; }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: #fff; border-bottom: 1px solid #e8e8e8;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem; height: 60px;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-logo img { height: 38px; width: 38px; object-fit: contain; }
+    .nav-logo-text { color: #111; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { color: #666; font-size: 13px; text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: #111; }
+    .nav-cta { background: #1565C0; color: #fff; font-size: 13px; padding: 7px 16px; border-radius: 5px; border: none; font-family: inherit; text-decoration: none; }
+    .nav-cta:hover { background: #1976D2; }
 
-    /* ADMIN PANEL */
-    .admin-panel { display: none; }
-    .admin-nav { background: #fff; border-bottom: 1px solid #e8e8e8; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 60px; }
-    .admin-nav-left { display: flex; align-items: center; gap: 10px; }
-    .admin-nav-left img { height: 36px; width: 36px; object-fit: contain; }
-    .admin-nav-title { font-size: 14px; font-weight: 600; color: #111; }
-    .admin-nav-badge { font-size: 11px; background: #eff6ff; color: #1565C0; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
-    .btn-logout { font-size: 12px; color: #888; background: none; border: none; cursor: pointer; font-family: inherit; }
-    .btn-logout:hover { color: #111; }
+    /* HERO */
+    .hero { padding: 7rem 2.5rem 5rem; max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; }
+    .hero-eyebrow { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2rem; }
+    .hero-eyebrow span { color: #1565C0; }
+    .hero-dot { width: 4px; height: 4px; border-radius: 50%; background: #ddd; }
+    .hero h1 { font-size: 52px; font-weight: 700; color: #0a0a0a; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
+    .hero h1 em { font-style: normal; color: #1565C0; }
+    .hero-sub { font-size: 17px; color: #666; max-width: 480px; line-height: 1.7; margin-bottom: 2.5rem; }
+    .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .btn-primary { background: #1565C0; color: #fff; font-size: 14px; padding: 11px 24px; border-radius: 5px; text-decoration: none; font-weight: 500; }
+    .btn-primary:hover { background: #1976D2; }
+    .btn-ghost { color: #1565C0; font-size: 14px; text-decoration: none; font-weight: 500; }
+    .btn-ghost:hover { text-decoration: underline; }
 
-    .admin-body { max-width: 760px; margin: 0 auto; padding: 3rem 2.5rem; }
-    .admin-header { margin-bottom: 2rem; }
-    .admin-header h1 { font-size: 28px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; }
-    .admin-header p { font-size: 13px; color: #888; margin-top: 4px; }
+    /* STATS */
+    .stats-strip { border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: center; }
+    .stats-strip-inner { max-width: 720px; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); padding: 0 2.5rem; }
+    .stat-item { padding: 2rem 0; border-right: 1px solid #f0f0f0; }
+    .stat-item:last-child { border-right: none; padding-left: 2rem; }
+    .stat-item:not(:first-child) { padding-left: 2rem; }
+    .stat-num { font-size: 32px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; }
+    .stat-label { font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
 
-    .fixture-admin-card { background: #fff; border: 1px solid #eee; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
-    .fac-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
-    .fac-title { font-size: 15px; font-weight: 600; color: #111; }
-    .fac-meta { font-size: 12px; color: #aaa; margin-top: 2px; }
-    .fac-count { font-size: 13px; font-weight: 600; color: #1565C0; }
-    .fac-players { margin-top: 0.75rem; display: flex; flex-wrap: wrap; gap: 6px; }
-    .fac-chip { background: #f0f4ff; border: 1px solid #dde3f0; border-radius: 20px; font-size: 12px; padding: 3px 12px; color: #1565C0; }
-    .fac-empty { font-size: 12px; color: #ccc; margin-top: 0.5rem; font-style: italic; }
+    /* NEXT MATCH */
+    .next-match-wrap { background: #f8f8f8; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
+    .next-match { max-width: 720px; margin: 0 auto; padding: 3rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    .next-match-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .next-match-title { font-size: 20px; font-weight: 700; color: #0a0a0a; }
+    .next-match-meta { font-size: 13px; color: #888; margin-top: 4px; }
+    .next-match-day { font-size: 36px; font-weight: 700; color: #1565C0; line-height: 1; text-align: right; }
+    .next-match-month { font-size: 13px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; text-align: right; }
 
-    .btn-refresh { background: #f5f5f5; color: #555; font-size: 12px; padding: 6px 14px; border-radius: 4px; border: 1px solid #e0e0e0; cursor: pointer; font-family: inherit; }
-    .btn-refresh:hover { background: #eee; }
+    /* ABOUT */
+    .about { max-width: 720px; margin: 0 auto; padding: 5rem 2.5rem; }
+    .about-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem; }
+    .about h2 { font-size: 28px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    .about p { font-size: 15px; color: #555; line-height: 1.75; margin-bottom: 1rem; max-width: 560px; }
+    .about-list { margin-top: 2.5rem; }
+    .about-item { display: flex; align-items: flex-start; gap: 1.25rem; padding: 1.25rem 0; border-top: 1px solid #f0f0f0; }
+    .about-item:last-child { border-bottom: 1px solid #f0f0f0; }
+    .about-num { font-size: 12px; color: #ccc; font-weight: 600; min-width: 24px; padding-top: 2px; }
+    .about-item-title { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 2px; }
+    .about-item-body { font-size: 13px; color: #888; line-height: 1.6; }
 
-    @media (max-width: 600px) {
-      .admin-body { padding: 2rem 1.25rem; }
-      .admin-nav { padding: 0 1.25rem; }
+    /* JOIN */
+    .join { max-width: 720px; margin: 0 auto; padding: 5rem 2.5rem; border-top: 1px solid #f0f0f0; }
+    .join-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem; }
+    .join h2 { font-size: 28px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    .join p { font-size: 15px; color: #666; margin-bottom: 2rem; max-width: 480px; line-height: 1.7; }
+    .join-form { display: flex; flex-direction: column; gap: 1rem; max-width: 480px; }
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-label { font-size: 12px; color: #888; margin-bottom: 5px; display: block; }
+    .form-input { width: 100%; padding: 10px 14px; background: #fff; border: 1px solid #e0e0e0; border-radius: 5px; color: #111; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; }
+    .form-input:focus { border-color: #1565C0; }
+    .form-input::placeholder { color: #bbb; }
+    .btn-submit { background: #1565C0; color: #fff; padding: 11px 24px; border: none; border-radius: 5px; font-size: 14px; font-family: inherit; cursor: pointer; font-weight: 500; align-self: flex-start; transition: background 0.2s; }
+    .btn-submit:hover { background: #1976D2; }
+    .btn-submit:disabled { background: #aaa; cursor: not-allowed; }
+    .form-success { display: none; font-size: 14px; color: #16a34a; padding: 1rem 0; }
+    .form-error { display: none; font-size: 13px; color: #dc2626; }
+
+    footer { border-top: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-left { font-size: 12px; color: #bbb; }
+    .footer-links { display: flex; gap: 1.5rem; }
+    .footer-links a { font-size: 12px; color: #bbb; text-decoration: none; }
+    .footer-links a:hover { color: #666; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 36px; }
+      .nav-links { display: none; }
+      .form-row-2 { grid-template-columns: 1fr; }
+      .stats-strip-inner { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid #f0f0f0; padding: 1.25rem 0; }
+      .next-match { flex-direction: column; }
+      .next-match-day, .next-match-month { text-align: left; }
     }
   </style>
 </head>
 <body>
 
-<!-- PIN SCREEN -->
-<div class="pin-screen" id="pin-screen">
-  <img class="pin-logo" src="logo.png" alt="Falcon CC">
-  <div class="pin-title">Admin Access</div>
-  <div class="pin-sub">Enter your PIN to continue</div>
-  <input class="pin-input" type="password" id="pin-input" maxlength="4" placeholder="····" onkeydown="if(event.key==='Enter')checkPin()">
-  <button class="btn-enter" onclick="checkPin()">Enter</button>
-  <div class="pin-error" id="pin-error">Incorrect PIN. Try again.</div>
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="logo.png" alt="Falcon CC">
+    <span class="nav-logo-text">Falcon CC</span>
+  </a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="team.html">Team</a>
+    <a href="fixtures.html">Fixtures</a>
+    <a href="results.html">Results</a>
+    <a href="#join">Join</a>
+  </div>
+  <a class="nav-cta" href="#join">Join us</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-eyebrow">
+    <span>Falcon CC</span>
+    <div class="hero-dot"></div>
+    SCL League
+    <div class="hero-dot"></div>
+    Est. 2025
+  </div>
+  <h1>Cricket in<br><em>Southern CT</em></h1>
+  <p class="hero-sub">A new cricket club competing in the Southern Connecticut League. Open to all skill levels — come play the game you love.</p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="#join">Join the club</a>
+    <a class="btn-ghost" href="fixtures.html">View fixtures →</a>
+  </div>
 </div>
 
-<!-- ADMIN PANEL -->
-<div class="admin-panel" id="admin-panel">
-  <div class="admin-nav">
-    <div class="admin-nav-left">
-      <img src="logo.png" alt="Falcon CC">
-      <span class="admin-nav-title">Falcon CC</span>
-      <span class="admin-nav-badge">Admin</span>
+<div class="stats-strip">
+  <div class="stats-strip-inner">
+    <div class="stat-item">
+      <div class="stat-num">19</div>
+      <div class="stat-label">Players</div>
     </div>
-    <button class="btn-logout" onclick="logout()">Log out</button>
-  </div>
-  <div class="admin-body">
-    <div class="admin-header">
-      <h1>Game Signups</h1>
-      <p>Live availability across all 2026 fixtures. <button class="btn-refresh" onclick="renderAdmin()">Refresh</button></p>
+    <div class="stat-item">
+      <div class="stat-num">12</div>
+      <div class="stat-label">Fixtures this season</div>
     </div>
-    <div id="admin-fixtures"></div>
+    <div class="stat-item">
+      <div class="stat-num">2025</div>
+      <div class="stat-label">Year founded</div>
+    </div>
   </div>
 </div>
+
+<div class="next-match-wrap">
+  <div class="next-match">
+    <div>
+      <div class="next-match-label">Next match</div>
+      <div class="next-match-title">Falcon CC vs Danbury</div>
+      <div class="next-match-meta">9:50 AM &nbsp;·&nbsp; Danbury</div>
+    </div>
+    <div>
+      <div class="next-match-day">25</div>
+      <div class="next-match-month">April 2026</div>
+    </div>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-label">Falcon CC — Est. 2025</div>
+  <h2>Something different.<br>Something that lasts.</h2>
+  <p>Falcon CC didn't start with a boardroom decision. It started with a group of people who wanted more — more intensity, more purpose, more of what makes cricket worth playing. Seasoned heads and hungry newcomers, all chasing the same thing.</p>
+  <p>No half measures. Every delivery, every innings, every match — full commitment.</p>
+  <div class="about-list">
+    <div class="about-item">
+      <div class="about-num">01</div>
+      <div>
+        <div class="about-item-title">A club worth belonging to</div>
+        <div class="about-item-body">The culture here isn't an afterthought — it's the foundation. We hold each other to a standard, look after each other, and show up when it counts.</div>
+      </div>
+    </div>
+    <div class="about-item">
+      <div class="about-num">02</div>
+      <div>
+        <div class="about-item-title">Taking cricket further</div>
+        <div class="about-item-body">Southern Connecticut deserves more cricket. We're here to change that — opening the game up to people who've never had the chance to experience it.</div>
+      </div>
+    </div>
+    <div class="about-item">
+      <div class="about-num">03</div>
+      <div>
+        <div class="about-item-title">Rooted in the region</div>
+        <div class="about-item-body">We're not passing through. We're investing in this area — building a club that means something to the people and places around us, long after the season ends.</div>
+      </div>
+    </div>
+    <div class="about-item">
+      <div class="about-num">04</div>
+      <div>
+        <div class="about-item-title">Unrelenting on the field</div>
+        <div class="about-item-body">Enjoyment and intensity aren't opposites. We chase victories with everything we have — because that's the only way to truly respect the game and the people you share it with.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="join" id="join">
+  <div class="join-label">Join us</div>
+  <h2>Become a Falcon</h2>
+  <p>Interested in playing for Falcon CC? Leave your details and we'll be in touch.</p>
+  <form class="join-form" id="join-form" action="https://formspree.io/f/mbdpvdlq" method="POST">
+    <div class="form-row-2">
+      <div>
+        <label class="form-label">First name</label>
+        <input class="form-input" type="text" name="first_name" placeholder="First name" required>
+      </div>
+      <div>
+        <label class="form-label">Last name</label>
+        <input class="form-input" type="text" name="last_name" placeholder="Last name" required>
+      </div>
+    </div>
+    <div>
+      <label class="form-label">Email</label>
+      <input class="form-input" type="email" name="email" placeholder="you@email.com" required>
+    </div>
+    <div>
+      <label class="form-label">Playing role</label>
+      <select class="form-input" name="role" required>
+        <option value="" disabled selected>Select role</option>
+        <option>Batsman</option>
+        <option>Bowler</option>
+        <option>All-rounder</option>
+        <option>Wicketkeeper</option>
+      </select>
+    </div>
+    <div>
+      <label class="form-label">Anything else?</label>
+      <textarea class="form-input" name="message" rows="3" placeholder="Experience, availability…" style="resize:vertical;"></textarea>
+    </div>
+    <button class="btn-submit" type="submit" id="submit-btn">Submit</button>
+    <div class="form-error" id="form-error">Something went wrong. Please try again.</div>
+    <div class="form-success" id="form-success">Thanks! We'll be in touch soon. Welcome to the Falcons.</div>
+  </form>
+</section>
+
+<footer>
+  <div class="footer-left">&copy; 2025 Falcon CC &nbsp;·&nbsp; SCL League &nbsp;·&nbsp; Southern Connecticut</div>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="team.html">Team</a>
+    <a href="fixtures.html">Fixtures</a>
+    <a href="results.html">Results</a>
+    <a href="#join">Join</a>
+  </div>
+</footer>
 
 <script>
-var PIN = '1147'; // Change this to your preferred 4-digit PIN
-var STORAGE_KEY = 'falconcc_signups';
-
-var FIXTURES = [
-  { id:'apr25', day:25, month:'Apr', weekday:'Sat', opponent:'Danbury', time:'9:50 AM', venue:'Danbury' },
-  { id:'apr26', day:26, month:'Apr', weekday:'Sun', opponent:'Danbury', time:'2:00 PM', venue:'Danbury' },
-  { id:'may02', day:2,  month:'May', weekday:'Sat', opponent:'CCA CC', time:'2:00 PM', venue:'West Haven' },
-  { id:'may03', day:3,  month:'May', weekday:'Sun', opponent:'Danbury 2', time:'2:00 PM', venue:'Danbury' },
-  { id:'may09', day:9,  month:'May', weekday:'Sat', opponent:'New Haven CC', time:'9:50 AM', venue:'New Milford' },
-  { id:'may16', day:16, month:'May', weekday:'Sat', opponent:'Bridgeport', time:'2:00 PM', venue:'Norwalk' },
-  { id:'may17', day:17, month:'May', weekday:'Sun', opponent:'Dogs', time:'9:50 AM', venue:'New Milford' },
-  { id:'may30', day:30, month:'May', weekday:'Sat', opponent:'West Haven', time:'2:00 PM', venue:'Danbury' },
-  { id:'may31', day:31, month:'May', weekday:'Sun', opponent:'GreenWave', time:'9:50 AM', venue:'Clinton, NH' },
-  { id:'jun06', day:6,  month:'Jun', weekday:'Sat', opponent:'Eagles', time:'2:00 PM', venue:'Kimberly, NH' },
-  { id:'jun13', day:13, month:'Jun', weekday:'Sat', opponent:'Quarter Final', time:'TBD', venue:'TBD' },
-  { id:'jun14', day:14, month:'Jun', weekday:'Sun', opponent:'Semi Final & Final', time:'TBD', venue:'TBD' }
-];
-
-function checkPin() {
-  var val = document.getElementById('pin-input').value;
-  if (val === PIN) {
-    document.getElementById('pin-screen').style.display = 'none';
-    document.getElementById('admin-panel').style.display = 'block';
-    renderAdmin();
-  } else {
-    var err = document.getElementById('pin-error');
-    err.style.display = 'block';
-    document.getElementById('pin-input').value = '';
-    setTimeout(function(){ err.style.display = 'none'; }, 3000);
-  }
-}
-
-function logout() {
-  document.getElementById('admin-panel').style.display = 'none';
-  document.getElementById('pin-screen').style.display = 'flex';
-  document.getElementById('pin-input').value = '';
-}
-
-function renderAdmin() {
-  var signups = {};
-  try { signups = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) {}
-  var html = '';
-  FIXTURES.forEach(function(f) {
-    var players = signups[f.id] || [];
-    var chips = players.length
-      ? players.map(function(p){ return '<span class="fac-chip">' + esc(p) + '</span>'; }).join('')
-      : '<div class="fac-empty">No signups yet</div>';
-    html += '<div class="fixture-admin-card">' +
-      '<div class="fac-header">' +
-        '<div><div class="fac-title">' + f.day + ' ' + f.month + ' — vs ' + esc(f.opponent) + '</div>' +
-        '<div class="fac-meta">' + f.weekday + ' · ' + f.time + ' · ' + esc(f.venue) + '</div></div>' +
-        '<div class="fac-count">' + players.length + ' / 11</div>' +
-      '</div>' +
-      '<div class="fac-players">' + chips + '</div>' +
-    '</div>';
+  var form = document.getElementById('join-form');
+  var btn = document.getElementById('submit-btn');
+  var success = document.getElementById('form-success');
+  var error = document.getElementById('form-error');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    btn.disabled = true; btn.textContent = 'Sending…';
+    error.style.display = 'none';
+    fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } })
+      .then(function(r) {
+        if (r.ok) { form.querySelectorAll('div,button').forEach(function(el){ el.style.display='none'; }); success.style.display='block'; }
+        else { error.style.display='block'; btn.disabled=false; btn.textContent='Submit'; }
+      }).catch(function(){ error.style.display='block'; btn.disabled=false; btn.textContent='Submit'; });
   });
-  document.getElementById('admin-fixtures').innerHTML = html;
-}
-
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 </script>
+
 </body>
 </html>
