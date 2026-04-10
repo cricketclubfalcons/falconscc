@@ -10,97 +10,100 @@
     html { scroll-behavior: smooth; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #fff; color: #111; line-height: 1.6; }
 
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      background: #fff; border-bottom: 1px solid #e8e8e8;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 2.5rem; height: 60px;
-    }
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 100; background: #0f1e3d; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 64px; border-bottom: 2px solid #3a6bc4; }
     .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-    .nav-logo img { height: 38px; width: 38px; object-fit: contain; }
-    .nav-logo-text { color: #111; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-logo img { height: 44px; width: 44px; object-fit: contain; }
+    .nav-logo-text { color: #fff; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
     .nav-links { display: flex; gap: 2rem; }
-    .nav-links a { color: #666; font-size: 13px; text-decoration: none; transition: color 0.2s; }
-    .nav-links a:hover { color: #111; }
-    .nav-links a.active { color: #111; font-weight: 600; }
-    .nav-cta { background: #1565C0; color: #fff; font-size: 13px; padding: 7px 16px; border-radius: 5px; border: none; font-family: inherit; text-decoration: none; }
-    .nav-cta:hover { background: #1976D2; }
+    .nav-links a { color: #8eaee0; font-size: 13px; text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.active { color: #fff; font-weight: 600; }
+    .nav-cta { background: #3a6bc4; color: #fff; font-size: 13px; padding: 7px 16px; border-radius: 5px; text-decoration: none; font-weight: 500; }
+    .nav-cta:hover { background: #4d7fd4; }
 
     /* HERO */
-    .hero { padding: 7rem 2.5rem 5rem; max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; align-items: flex-start; }
-    .hero-eyebrow { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #999; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2rem; }
-    .hero-eyebrow span { color: #1565C0; }
-    .hero-dot { width: 4px; height: 4px; border-radius: 50%; background: #ddd; }
-    .hero h1 { font-size: 52px; font-weight: 700; color: #0a0a0a; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
-    .hero h1 em { font-style: normal; color: #1565C0; }
-    .hero-sub { font-size: 17px; color: #666; max-width: 480px; line-height: 1.7; margin-bottom: 2.5rem; }
-    .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-    .btn-primary { background: #1565C0; color: #fff; font-size: 14px; padding: 11px 24px; border-radius: 5px; text-decoration: none; font-weight: 500; }
-    .btn-primary:hover { background: #1976D2; }
-    .btn-ghost { color: #1565C0; font-size: 14px; text-decoration: none; font-weight: 500; }
-    .btn-ghost:hover { text-decoration: underline; }
+    .hero { background: #0f1e3d; padding: 6rem 2.5rem 5rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 100%, #3a6bc420 0%, transparent 70%); pointer-events: none; }
+    .hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .hero-logo { width: 160px; height: 160px; object-fit: contain; margin: 0 auto 2rem; display: block; filter: drop-shadow(0 4px 24px #3a6bc440); }
+    .hero-eyebrow { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 11px; color: #8eaee0; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero-dot { width: 3px; height: 3px; border-radius: 50%; background: #3a6bc4; }
+    .hero h1 { font-size: 52px; font-weight: 700; color: #fff; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 1.25rem; }
+    .hero h1 em { font-style: normal; color: #5b9bd5; }
+    .hero-sub { font-size: 17px; color: #8eaee0; max-width: 440px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    .hero-actions { display: flex; gap: 1rem; align-items: center; justify-content: center; flex-wrap: wrap; }
+    .btn-primary { background: #3a6bc4; color: #fff; font-size: 14px; padding: 12px 28px; border-radius: 5px; text-decoration: none; font-weight: 500; }
+    .btn-primary:hover { background: #4d7fd4; }
+    .btn-ghost { color: #5b9bd5; font-size: 14px; text-decoration: none; font-weight: 500; border: 1px solid #3a6bc440; padding: 12px 28px; border-radius: 5px; }
+    .btn-ghost:hover { border-color: #3a6bc4; color: #fff; }
 
     /* STATS */
-    .stats-strip { border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: center; }
+    .stats-strip { background: #f8f9ff; border-top: 1px solid #e8edf8; border-bottom: 1px solid #e8edf8; display: flex; justify-content: center; }
     .stats-strip-inner { max-width: 720px; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); padding: 0 2.5rem; }
-    .stat-item { padding: 2rem 0; border-right: 1px solid #f0f0f0; }
+    .stat-item { padding: 2rem 0; border-right: 1px solid #e8edf8; }
     .stat-item:last-child { border-right: none; padding-left: 2rem; }
     .stat-item:not(:first-child) { padding-left: 2rem; }
-    .stat-num { font-size: 32px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; }
+    .stat-num { font-size: 32px; font-weight: 700; color: #0f1e3d; letter-spacing: -0.02em; }
     .stat-label { font-size: 12px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
 
     /* NEXT MATCH */
-    .next-match-wrap { background: #f8f8f8; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
-    .next-match { max-width: 720px; margin: 0 auto; padding: 3rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
-    .next-match-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
-    .next-match-title { font-size: 20px; font-weight: 700; color: #0a0a0a; }
-    .next-match-meta { font-size: 13px; color: #888; margin-top: 4px; }
-    .next-match-day { font-size: 36px; font-weight: 700; color: #1565C0; line-height: 1; text-align: right; }
-    .next-match-month { font-size: 13px; color: #999; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; text-align: right; }
+    .next-match-wrap { background: #0f1e3d; }
+    .next-match { max-width: 720px; margin: 0 auto; padding: 2.5rem 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+    .next-match-label { font-size: 11px; color: #8eaee0; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .next-match-title { font-size: 20px; font-weight: 700; color: #fff; }
+    .next-match-meta { font-size: 13px; color: #8eaee0; margin-top: 4px; }
+    .next-match-day { font-size: 40px; font-weight: 700; color: #5b9bd5; line-height: 1; text-align: right; }
+    .next-match-month { font-size: 13px; color: #8eaee0; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; text-align: right; }
 
     /* ABOUT */
     .about { max-width: 720px; margin: 0 auto; padding: 5rem 2.5rem; }
-    .about-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem; }
-    .about h2 { font-size: 28px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; margin-bottom: 1rem; }
+    .about-label { font-size: 11px; color: #3a6bc4; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem; font-weight: 600; }
+    .about h2 { font-size: 28px; font-weight: 700; color: #0f1e3d; letter-spacing: -0.02em; margin-bottom: 1rem; }
     .about p { font-size: 15px; color: #555; line-height: 1.75; margin-bottom: 1rem; max-width: 560px; }
     .about-list { margin-top: 2.5rem; }
     .about-item { display: flex; align-items: flex-start; gap: 1.25rem; padding: 1.25rem 0; border-top: 1px solid #f0f0f0; }
     .about-item:last-child { border-bottom: 1px solid #f0f0f0; }
-    .about-num { font-size: 12px; color: #ccc; font-weight: 600; min-width: 24px; padding-top: 2px; }
-    .about-item-title { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 2px; }
+    .about-num { font-size: 12px; color: #3a6bc4; font-weight: 700; min-width: 24px; padding-top: 2px; }
+    .about-item-title { font-size: 14px; font-weight: 600; color: #0f1e3d; margin-bottom: 2px; }
     .about-item-body { font-size: 13px; color: #888; line-height: 1.6; }
 
     /* JOIN */
-    .join { max-width: 720px; margin: 0 auto; padding: 5rem 2.5rem; border-top: 1px solid #f0f0f0; }
-    .join-label { font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem; }
-    .join h2 { font-size: 28px; font-weight: 700; color: #0a0a0a; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+    .join-wrap { background: #f8f9ff; border-top: 1px solid #e8edf8; }
+    .join { max-width: 720px; margin: 0 auto; padding: 5rem 2.5rem; }
+    .join-label { font-size: 11px; color: #3a6bc4; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.5rem; font-weight: 600; }
+    .join h2 { font-size: 28px; font-weight: 700; color: #0f1e3d; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
     .join p { font-size: 15px; color: #666; margin-bottom: 2rem; max-width: 480px; line-height: 1.7; }
     .join-form { display: flex; flex-direction: column; gap: 1rem; max-width: 480px; }
     .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-label { font-size: 12px; color: #888; margin-bottom: 5px; display: block; }
-    .form-input { width: 100%; padding: 10px 14px; background: #fff; border: 1px solid #e0e0e0; border-radius: 5px; color: #111; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; }
-    .form-input:focus { border-color: #1565C0; }
+    .form-input { width: 100%; padding: 10px 14px; background: #fff; border: 1px solid #dde3f0; border-radius: 5px; color: #111; font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; }
+    .form-input:focus { border-color: #3a6bc4; }
     .form-input::placeholder { color: #bbb; }
-    .btn-submit { background: #1565C0; color: #fff; padding: 11px 24px; border: none; border-radius: 5px; font-size: 14px; font-family: inherit; cursor: pointer; font-weight: 500; align-self: flex-start; transition: background 0.2s; }
-    .btn-submit:hover { background: #1976D2; }
+    .btn-submit { background: #0f1e3d; color: #fff; padding: 11px 24px; border: none; border-radius: 5px; font-size: 14px; font-family: inherit; cursor: pointer; font-weight: 500; align-self: flex-start; }
+    .btn-submit:hover { background: #1a2d54; }
     .btn-submit:disabled { background: #aaa; cursor: not-allowed; }
     .form-success { display: none; font-size: 14px; color: #16a34a; padding: 1rem 0; }
     .form-error { display: none; font-size: 13px; color: #dc2626; }
 
-    footer { border-top: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 2.5rem; flex-wrap: wrap; gap: 1rem; }
-    .footer-left { font-size: 12px; color: #bbb; }
+    /* FOOTER */
+    footer { background: #0f1e3d; border-top: 1px solid #1e3260; display: flex; align-items: center; justify-content: space-between; padding: 1.75rem 2.5rem; flex-wrap: wrap; gap: 1rem; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; }
+    .footer-logo img { height: 28px; width: 28px; object-fit: contain; }
+    .footer-left { font-size: 12px; color: #4a6899; }
     .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a { font-size: 12px; color: #bbb; text-decoration: none; }
-    .footer-links a:hover { color: #666; }
+    .footer-links a { font-size: 12px; color: #4a6899; text-decoration: none; }
+    .footer-links a:hover { color: #8eaee0; }
 
     @media (max-width: 640px) {
       .hero h1 { font-size: 36px; }
       .nav-links { display: none; }
       .form-row-2 { grid-template-columns: 1fr; }
       .stats-strip-inner { grid-template-columns: 1fr; }
-      .stat-item { border-right: none; border-bottom: 1px solid #f0f0f0; padding: 1.25rem 0; }
+      .stat-item { border-right: none; border-bottom: 1px solid #e8edf8; padding: 1.25rem 0; }
       .next-match { flex-direction: column; }
       .next-match-day, .next-match-month { text-align: left; }
+      .hero-logo { width: 120px; height: 120px; }
     }
   </style>
 </head>
@@ -123,36 +126,25 @@
 </nav>
 
 <div class="hero">
-  <img src="logo.png" alt="Falcon CC" style="width:180px;height:180px;object-fit:contain;margin-bottom:1.5rem;">
-  <div class="hero-eyebrow">
-    <span>Falcon CC</span>
-    <div class="hero-dot"></div>
-    SCL League
-    <div class="hero-dot"></div>
-    Est. 2025
-  </div>
-  <h1>Cricket in<br><em>Southern CT</em></h1>
-  <p class="hero-sub">A new cricket club competing in the Southern Connecticut League. Open to all skill levels — come play the game you love.</p>
-  <div class="hero-actions">
-    <a class="btn-primary" href="#join">Join the club</a>
-    <a class="btn-ghost" href="fixtures.html">View fixtures →</a>
+  <div class="hero-inner">
+    <img class="hero-logo" src="logo.png" alt="Falcon CC">
+    <div class="hero-eyebrow">
+      <span>Falcon CC</span><div class="hero-dot"></div>SCL League<div class="hero-dot"></div>Est. 2025
+    </div>
+    <h1>Cricket in<br><em>Southern CT</em></h1>
+    <p class="hero-sub">A new cricket club competing in the Southern Connecticut League. Open to all skill levels — come play the game you love.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#join">Join the club</a>
+      <a class="btn-ghost" href="fixtures.html">View fixtures →</a>
+    </div>
   </div>
 </div>
 
 <div class="stats-strip">
   <div class="stats-strip-inner">
-    <div class="stat-item">
-      <div class="stat-num">19</div>
-      <div class="stat-label">Players</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">12</div>
-      <div class="stat-label">Fixtures this season</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">2025</div>
-      <div class="stat-label">Year founded</div>
-    </div>
+    <div class="stat-item"><div class="stat-num">19</div><div class="stat-label">Players</div></div>
+    <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Fixtures this season</div></div>
+    <div class="stat-item"><div class="stat-num">2025</div><div class="stat-label">Year founded</div></div>
   </div>
 </div>
 
@@ -176,80 +168,45 @@
   <p>Falcon CC didn't start with a boardroom decision. It started with a group of people who wanted more — more intensity, more purpose, more of what makes cricket worth playing. Seasoned heads and hungry newcomers, all chasing the same thing.</p>
   <p>No half measures. Every delivery, every innings, every match — full commitment.</p>
   <div class="about-list">
-    <div class="about-item">
-      <div class="about-num">01</div>
-      <div>
-        <div class="about-item-title">A club worth belonging to</div>
-        <div class="about-item-body">The culture here isn't an afterthought — it's the foundation. We hold each other to a standard, look after each other, and show up when it counts.</div>
-      </div>
-    </div>
-    <div class="about-item">
-      <div class="about-num">02</div>
-      <div>
-        <div class="about-item-title">Taking cricket further</div>
-        <div class="about-item-body">Southern Connecticut deserves more cricket. We're here to change that — opening the game up to people who've never had the chance to experience it.</div>
-      </div>
-    </div>
-    <div class="about-item">
-      <div class="about-num">03</div>
-      <div>
-        <div class="about-item-title">Rooted in the region</div>
-        <div class="about-item-body">We're not passing through. We're investing in this area — building a club that means something to the people and places around us, long after the season ends.</div>
-      </div>
-    </div>
-    <div class="about-item">
-      <div class="about-num">04</div>
-      <div>
-        <div class="about-item-title">Unrelenting on the field</div>
-        <div class="about-item-body">Enjoyment and intensity aren't opposites. We chase victories with everything we have — because that's the only way to truly respect the game and the people you share it with.</div>
-      </div>
-    </div>
+    <div class="about-item"><div class="about-num">01</div><div><div class="about-item-title">A club worth belonging to</div><div class="about-item-body">The culture here isn't an afterthought — it's the foundation. We hold each other to a standard, look after each other, and show up when it counts.</div></div></div>
+    <div class="about-item"><div class="about-num">02</div><div><div class="about-item-title">Taking cricket further</div><div class="about-item-body">Southern Connecticut deserves more cricket. We're here to change that — opening the game up to people who've never had the chance to experience it.</div></div></div>
+    <div class="about-item"><div class="about-num">03</div><div><div class="about-item-title">Rooted in the region</div><div class="about-item-body">We're not passing through. We're investing in this area — building a club that means something to the people and places around us, long after the season ends.</div></div></div>
+    <div class="about-item"><div class="about-num">04</div><div><div class="about-item-title">Unrelenting on the field</div><div class="about-item-body">Enjoyment and intensity aren't opposites. We chase victories with everything we have — because that's the only way to truly respect the game and the people you share it with.</div></div></div>
   </div>
 </section>
 
-<section class="join" id="join">
-  <div class="join-label">Join us</div>
-  <h2>Become a Falcon</h2>
-  <p>Interested in playing for Falcon CC? Leave your details and we'll be in touch.</p>
-  <form class="join-form" id="join-form" action="https://formspree.io/f/mbdpvdlq" method="POST">
-    <div class="form-row-2">
-      <div>
-        <label class="form-label">First name</label>
-        <input class="form-input" type="text" name="first_name" placeholder="First name" required>
+<div class="join-wrap">
+  <section class="join" id="join">
+    <div class="join-label">Join us</div>
+    <h2>Become a Falcon</h2>
+    <p>Interested in playing for Falcon CC? Leave your details and we'll be in touch.</p>
+    <form class="join-form" id="join-form" action="https://formspree.io/f/mbdpvdlq" method="POST">
+      <div class="form-row-2">
+        <div><label class="form-label">First name</label><input class="form-input" type="text" name="first_name" placeholder="First name" required></div>
+        <div><label class="form-label">Last name</label><input class="form-input" type="text" name="last_name" placeholder="Last name" required></div>
       </div>
-      <div>
-        <label class="form-label">Last name</label>
-        <input class="form-input" type="text" name="last_name" placeholder="Last name" required>
+      <div><label class="form-label">Email</label><input class="form-input" type="email" name="email" placeholder="you@email.com" required></div>
+      <div><label class="form-label">Playing role</label>
+        <select class="form-input" name="role" required>
+          <option value="" disabled selected>Select role</option>
+          <option>Batsman</option><option>Bowler</option><option>All-rounder</option><option>Wicketkeeper</option>
+        </select>
       </div>
-    </div>
-    <div>
-      <label class="form-label">Email</label>
-      <input class="form-input" type="email" name="email" placeholder="you@email.com" required>
-    </div>
-    <div>
-      <label class="form-label">Playing role</label>
-      <select class="form-input" name="role" required>
-        <option value="" disabled selected>Select role</option>
-        <option>Batsman</option>
-        <option>Bowler</option>
-        <option>All-rounder</option>
-        <option>Wicketkeeper</option>
-      </select>
-    </div>
-    <div>
-      <label class="form-label">Anything else?</label>
-      <textarea class="form-input" name="message" rows="3" placeholder="Experience, availability…" style="resize:vertical;"></textarea>
-    </div>
-    <button class="btn-submit" type="submit" id="submit-btn">Submit</button>
-    <div class="form-error" id="form-error">Something went wrong. Please try again.</div>
-    <div class="form-success" id="form-success">Thanks! We'll be in touch soon. Welcome to the Falcons.</div>
-  </form>
-</section>
+      <div><label class="form-label">Anything else?</label><textarea class="form-input" name="message" rows="3" placeholder="Experience, availability…" style="resize:vertical;"></textarea></div>
+      <button class="btn-submit" type="submit" id="submit-btn">Submit</button>
+      <div class="form-error" id="form-error">Something went wrong. Please try again.</div>
+      <div class="form-success" id="form-success">Thanks! We'll be in touch soon. Welcome to the Falcons.</div>
+    </form>
+  </section>
+</div>
 
 <footer>
-  <div class="footer-left">&copy; 2025 Falcon CC &nbsp;·&nbsp; SCL League &nbsp;·&nbsp; Southern Connecticut</div>
+  <div class="footer-logo">
+    <img src="logo.png" alt="Falcon CC">
+    <span class="footer-left">&nbsp; &copy; 2025 Falcon CC &nbsp;·&nbsp; SCL League &nbsp;·&nbsp; Southern Connecticut</span>
+  </div>
   <div class="footer-links">
-    <a href="#about">About</a>
+    <a href="index.html">Home</a>
     <a href="team.html">Team</a>
     <a href="fixtures.html">Fixtures</a>
     <a href="results.html">Results</a>
@@ -273,6 +230,5 @@
       }).catch(function(){ error.style.display='block'; btn.disabled=false; btn.textContent='Submit'; });
   });
 </script>
-
 </body>
 </html>
